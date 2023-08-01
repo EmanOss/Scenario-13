@@ -41,3 +41,10 @@
 /home/lenovo/Scenario 13/bin/Debug/net7.0/System.CodeDom.dll
 /home/lenovo/Scenario 13/bin/Debug/net7.0/Npgsql.dll
 /home/lenovo/Scenario 13/bin/Debug/net7.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.IdentityModel.Logging.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.IdentityModel.Protocols.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.IdentityModel.Tokens.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/System.IdentityModel.Tokens.Jwt.dll

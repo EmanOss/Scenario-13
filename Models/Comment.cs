@@ -5,11 +5,11 @@ namespace Scenario_13.Models;
 
 public partial class Comment
 {
-    public long Id { get; set; }
+    public int Id { get; set; }
 
-    public long BlogId { get; set; }
+    public int BlogId { get; set; }
 
-    public long UserId { get; set; }
+    public int UserId { get; set; }
 
     public DateTime Date { get; set; }
 

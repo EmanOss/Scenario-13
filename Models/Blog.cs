@@ -5,7 +5,7 @@ namespace Scenario_13.Models;
 
 public partial class Blog
 {
-    public long Id { get; set; }
+    public int Id { get; set; }
 
     public DateTime CreationDate { get; set; }
 
@@ -13,7 +13,7 @@ public partial class Blog
 
     public string Title { get; set; } = null!;
 
-    public long AuthorId { get; set; }
+    public int AuthorId { get; set; }
 
     public virtual User Author { get; set; } = null!;
 
