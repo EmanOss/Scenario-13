@@ -6,12 +6,9 @@ namespace Scenario_13.Models;
 public partial class User
 {
     [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
+    public required string UserName { get; set; }
 
-    public string UserName { get; set; } = null!;
-
-    public string PasswordHash { get; set; } = null!;
+    public required string PasswordHash { get; set; }
 
     public virtual ICollection<Blog> Blogs { get; set; } = new List<Blog>();
 

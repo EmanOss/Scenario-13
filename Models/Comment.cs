@@ -1,19 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Scenario_13.Models;
 
 public partial class Comment
 {
-    public int Id { get; set; }
+    [Key]
+    [Column(Order = 1)]
+    public required int BlogId { get; set; }
+    [Key]
+    [Column(Order = 2)]
+    public required string UserName { get; set; }
+    [Key]
+    [Column(Order = 3)]
+    public required DateTime Date { get; set; } = DateTime.UtcNow;
 
-    public int BlogId { get; set; }
+    public required virtual Blog Blog { get; set; }
 
-    public int UserId { get; set; }
-
-    public DateTime Date { get; set; }
-
-    public virtual Blog Blog { get; set; } = null!;
-
-    public virtual User User { get; set; } = null!;
+    public required virtual User User { get; set; }
 }

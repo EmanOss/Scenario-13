@@ -35,7 +35,7 @@ public partial class PostgresContext : DbContext
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("id");
-            entity.Property(e => e.AuthorId).HasColumnName("authorId");
+            entity.Property(e => e.AuthorUserName).HasColumnName("authorUserName");
             entity.Property(e => e.CreationDate)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnName("creationDate");
@@ -45,25 +45,22 @@ public partial class PostgresContext : DbContext
                 .HasColumnName("title");
 
             entity.HasOne(d => d.Author).WithMany(p => p.Blogs)
-                .HasForeignKey(d => d.AuthorId)
+                .HasForeignKey(d => d.AuthorUserName)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_blog_user");
         });
 
         modelBuilder.Entity<Comment>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("comment_pkey");
+            entity.HasKey(e => new{e.BlogId, e.UserName, e.Date}).HasName("comment_pkey");
 
             entity.ToTable("comment");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
             entity.Property(e => e.BlogId).HasColumnName("blogId");
             entity.Property(e => e.Date)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnName("date");
-            entity.Property(e => e.UserId).HasColumnName("userId");
+            entity.Property(e => e.UserName).HasColumnName("userName");
 
             entity.HasOne(d => d.Blog).WithMany(p => p.Comments)
                 .HasForeignKey(d => d.BlogId)
@@ -71,20 +68,17 @@ public partial class PostgresContext : DbContext
                 .HasConstraintName("fk_comment_blog");
 
             entity.HasOne(d => d.User).WithMany(p => p.Comments)
-                .HasForeignKey(d => d.UserId)
+                .HasForeignKey(d => d.UserName)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_comment_user");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("user_pkey");
+            entity.HasKey(e => e.UserName).HasName("user_pkey");
 
             entity.ToTable("user");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
             entity.Property(e => e.UserName)
                 .HasMaxLength(50)
                 .HasColumnName("userName");

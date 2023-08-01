@@ -28,9 +28,10 @@ namespace Scenario_13.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("id");
 
-                    b.Property<int>("AuthorId")
-                        .HasColumnType("integer")
-                        .HasColumnName("authorId");
+                    b.Property<string>("AuthorUserName")
+                        .IsRequired()
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("authorUserName");
 
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
@@ -52,46 +53,44 @@ namespace Scenario_13.Migrations
                     b.HasKey("Id")
                         .HasName("blog_pkey");
 
-                    b.HasIndex("AuthorId");
+                    b.HasIndex("AuthorUserName");
 
                     b.ToTable("blog", (string)null);
                 });
 
             modelBuilder.Entity("Scenario_13.Models.Comment", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
                     b.Property<int>("BlogId")
                         .HasColumnType("integer")
-                        .HasColumnName("blogId");
+                        .HasColumnName("blogId")
+                        .HasColumnOrder(1);
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("userName")
+                        .HasColumnOrder(2);
 
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("date")
+                        .HasColumnOrder(3)
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer")
-                        .HasColumnName("userId");
-
-                    b.HasKey("Id")
+                    b.HasKey("BlogId", "UserName", "Date")
                         .HasName("comment_pkey");
 
-                    b.HasIndex("BlogId");
-
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserName");
 
                     b.ToTable("comment", (string)null);
                 });
 
             modelBuilder.Entity("Scenario_13.Models.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                    b.Property<string>("UserName")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("userName");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
@@ -99,13 +98,7 @@ namespace Scenario_13.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("passwordHash");
 
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("userName");
-
-                    b.HasKey("Id")
+                    b.HasKey("UserName")
                         .HasName("user_pkey");
 
                     b.ToTable("user", (string)null);
@@ -115,7 +108,7 @@ namespace Scenario_13.Migrations
                 {
                     b.HasOne("Scenario_13.Models.User", "Author")
                         .WithMany("Blogs")
-                        .HasForeignKey("AuthorId")
+                        .HasForeignKey("AuthorUserName")
                         .IsRequired()
                         .HasConstraintName("fk_blog_user");
 
@@ -132,7 +125,7 @@ namespace Scenario_13.Migrations
 
                     b.HasOne("Scenario_13.Models.User", "User")
                         .WithMany("Comments")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("UserName")
                         .IsRequired()
                         .HasConstraintName("fk_comment_user");
 
