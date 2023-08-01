@@ -1,0 +1,33 @@
+/home/lenovo/Scenario 13/bin/Debug/net7.0/appsettings.Development.json
+/home/lenovo/Scenario 13/bin/Debug/net7.0/appsettings.json
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Scenario 13
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Scenario 13.deps.json
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Scenario 13.runtimeconfig.json
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Scenario 13.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Scenario 13.pdb
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.AspNetCore.OpenApi.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.OpenApi.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Swashbuckle.AspNetCore.Swagger.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+/home/lenovo/Scenario 13/obj/Debug/net7.0/Scenario 13.csproj.AssemblyReference.cache
+/home/lenovo/Scenario 13/obj/Debug/net7.0/Scenario 13.GeneratedMSBuildEditorConfig.editorconfig
+/home/lenovo/Scenario 13/obj/Debug/net7.0/Scenario 13.AssemblyInfoInputs.cache
+/home/lenovo/Scenario 13/obj/Debug/net7.0/Scenario 13.AssemblyInfo.cs
+/home/lenovo/Scenario 13/obj/Debug/net7.0/Scenario 13.csproj.CoreCompileInputs.cache
+/home/lenovo/Scenario 13/obj/Debug/net7.0/Scenario 13.MvcApplicationPartsAssemblyInfo.cs
+/home/lenovo/Scenario 13/obj/Debug/net7.0/Scenario 13.MvcApplicationPartsAssemblyInfo.cache
+/home/lenovo/Scenario 13/obj/Debug/net7.0/staticwebassets/msbuild.Scenario 13.Microsoft.AspNetCore.StaticWebAssets.props
+/home/lenovo/Scenario 13/obj/Debug/net7.0/staticwebassets/msbuild.build.Scenario 13.props
+/home/lenovo/Scenario 13/obj/Debug/net7.0/staticwebassets/msbuild.buildMultiTargeting.Scenario 13.props
+/home/lenovo/Scenario 13/obj/Debug/net7.0/staticwebassets/msbuild.buildTransitive.Scenario 13.props
+/home/lenovo/Scenario 13/obj/Debug/net7.0/staticwebassets.pack.json
+/home/lenovo/Scenario 13/obj/Debug/net7.0/staticwebassets.build.json
+/home/lenovo/Scenario 13/obj/Debug/net7.0/staticwebassets.development.json
+/home/lenovo/Scenario 13/obj/Debug/net7.0/scopedcss/bundle/Scenario 13.styles.css
+/home/lenovo/Scenario 13/obj/Debug/net7.0/Scenario 13.csproj.CopyComplete
+/home/lenovo/Scenario 13/obj/Debug/net7.0/Scenario 13.dll
+/home/lenovo/Scenario 13/obj/Debug/net7.0/refint/Scenario 13.dll
+/home/lenovo/Scenario 13/obj/Debug/net7.0/Scenario 13.pdb
+/home/lenovo/Scenario 13/obj/Debug/net7.0/Scenario 13.genruntimeconfig.cache
+/home/lenovo/Scenario 13/obj/Debug/net7.0/ref/Scenario 13.dll

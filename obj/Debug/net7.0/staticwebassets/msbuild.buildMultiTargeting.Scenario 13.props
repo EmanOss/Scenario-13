@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/Scenario 13.props" />
+</Project>
