@@ -1,2 +1,4 @@
 ./history
 ./bin
+.history
+bin/Debug/net7.0
