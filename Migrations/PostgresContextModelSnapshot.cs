@@ -93,11 +93,11 @@ namespace Scenario_13.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("id");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
-                        .HasColumnName("password");
+                        .HasColumnName("passwordHash");
 
                     b.Property<string>("UserName")
                         .IsRequired()

@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "zmr/n23G4pFG5AiGL+akOgTpFcrP9ePkhgC8tKoUUHubdl6teflQFpBAtYXxnLYImJOyJXHr+Jl7GXSDaSf7Tg==",
+  "dgSpecHash": "nwzgPUmTfN6DXVeBMCm8TsflBabewX5fvSKEs3SCcq+BRy7S3SvF1diLsq7w1dWqL8YakIW/CS9B0qqI2WzEDw==",
   "success": true,
   "projectFilePath": "/home/lenovo/Scenario 13/Scenario 13.csproj",
   "expectedPackageFiles": [
+    "/home/lenovo/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
     "/home/lenovo/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/home/lenovo/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/7.0.0/microsoft.aspnetcore.authentication.jwtbearer.7.0.0.nupkg.sha512",
     "/home/lenovo/.nuget/packages/microsoft.aspnetcore.openapi/7.0.9/microsoft.aspnetcore.openapi.7.0.9.nupkg.sha512",

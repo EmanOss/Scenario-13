@@ -88,9 +88,9 @@ public partial class PostgresContext : DbContext
             entity.Property(e => e.UserName)
                 .HasMaxLength(50)
                 .HasColumnName("userName");
-            entity.Property(e => e.Password)
+            entity.Property(e => e.PasswordHash)
                 .HasMaxLength(50)
-                .HasColumnName("password");
+                .HasColumnName("passwordHash");
         });
 
         OnModelCreatingPartial(modelBuilder);
