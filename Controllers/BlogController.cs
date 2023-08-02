@@ -9,17 +9,17 @@ namespace Scenario_13.Controllers;
 public class BlogController : ControllerBase
 {
     private readonly PostgresContext _DBContext;
-    // private User _currentUser;
 
     public BlogController(PostgresContext dBContext)
     {
         _DBContext = dBContext;
     }
-    private User? GetCurrentUser(){
+    private User? GetCurrentUser()
+    {
         var currentUser = HttpContext.User;
         if (currentUser.Identity != null && currentUser.Identity.IsAuthenticated)
         {
-            return _DBContext.Users.FirstOrDefault(u => u.UserName == currentUser.Identity.Name); 
+            return _DBContext.Users.FirstOrDefault(u => u.UserName == currentUser.Identity.Name);
         }
         return null;
     }
@@ -36,34 +36,13 @@ public class BlogController : ControllerBase
         var blog = _DBContext.Blogs.FirstOrDefault(b => b.Id == id);
         return Ok(blog);
     }
-    [HttpDelete("remove/{id}")]
-    public IActionResult Remove(int id)
-    {
-        User? currUser = GetCurrentUser();
-        if (currUser!=null)
-        {
-            // var author = _DBContext.Users.FirstOrDefault(u => u.UserName == currentUser.UserName);
-            var blog = _DBContext.Blogs.FirstOrDefault(b => b.Id == id);
-            if (blog != null && blog.AuthorUserName == currUser.UserName)
-            {
-                _DBContext.Remove(blog);
-                _DBContext.SaveChanges();
-                return Ok(true);
-            }
-        }
-        //todo - 404 not found
-        return Ok(false);
-    }
     [HttpPost("create")]
     public IActionResult Create([FromBody] BlogDto blogDto)
     {
         //make the author be the currently logged in user
         User? currUser = GetCurrentUser();
-        if (currUser!=null)
+        if (currUser != null)
         {
-            // You can access the user's unique identifier, username, or other claims here
-            // var author = _DBContext.Users.FirstOrDefault(u => u.UserName == currUser.UserName);
-            // Console.WriteLine("curr user " + author.UserName);
             var blog = new Blog
             {
                 AuthorUserName = currUser.UserName,
@@ -71,7 +50,7 @@ public class BlogController : ControllerBase
                 Text = blogDto.Text,
                 Author = currUser
             };
-            // author?.Blogs.Add(blog); //TODO - do i need this????
+            currUser?.Blogs.Add(blog);
             _DBContext.Blogs.Add(blog);
             _DBContext.SaveChanges();
             return Ok(true);
@@ -80,13 +59,11 @@ public class BlogController : ControllerBase
 
     }
     [HttpPost("update/{id}")]
-    public IActionResult Update(int id,[FromBody] BlogDto blogDto)
+    public IActionResult Update(int id, [FromBody] BlogDto blogDto)
     {
         User? currUser = GetCurrentUser();
-        if (currUser!=null)
+        if (currUser != null)
         {
-            // You can access the user's unique identifier, username, or other claims here
-            // var author = _DBContext.Users.FirstOrDefault(u => u.UserName == currUser.UserName);
             var blog = _DBContext.Blogs.FirstOrDefault(b => b.Id == id);
             if (blog != null && blog.AuthorUserName == currUser.UserName)
             {
@@ -101,5 +78,21 @@ public class BlogController : ControllerBase
         return Ok(false);
 
     }
-
+    [HttpDelete("remove/{id}")]
+    public IActionResult Remove(int id)
+    {
+        User? currUser = GetCurrentUser();
+        if (currUser != null)
+        {
+            var blog = _DBContext.Blogs.FirstOrDefault(b => b.Id == id);
+            if (blog != null && blog.AuthorUserName == currUser.UserName)
+            {
+                _DBContext.Remove(blog);
+                _DBContext.SaveChanges();
+                return Ok(true);
+            }
+        }
+        //todo - 404 not found
+        return Ok(false);
+    }
 }

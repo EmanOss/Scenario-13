@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Scenario_13.Models;
 namespace Scenario_13.Controllers;
 
@@ -14,50 +15,46 @@ public class CommentController : ControllerBase
     {
         _DBContext = dBContext;
     }
+    /*Get the currently logged in user*/
+    private User? GetCurrentUser()
+    {
+        var currentUser = HttpContext.User;
+        if (currentUser.Identity != null && currentUser.Identity.IsAuthenticated)
+        {
+            return _DBContext.Users.FirstOrDefault(u => u.UserName == currentUser.Identity.Name);
+        }
+        return null;
+    }
 
     [HttpGet("GetByBlogId/{blogId}")]
     public IActionResult GetById(int blogId)
     {
+        // var blog = _DBContext.Blogs.Include(b => b.Comments).FirstOrDefault(b => b.Id == blogId);
         var blog = _DBContext.Blogs.FirstOrDefault(b => b.Id == blogId);
-        
-        return Ok(blog);
+
+        if (blog == null)
+            return NotFound();
+        List<Comment> comments = (List<Comment>)blog.Comments;
+        return Ok(comments);
     }
-    [HttpDelete("remove/{id}")]
-    public IActionResult Remove(int id)
+    [HttpPost("create/{blogId}")]
+    public IActionResult Create(int blogId, [FromBody] CommentDto commentDto)
     {
-        var currentUser = HttpContext.User;
-        if (currentUser.Identity != null && currentUser.Identity.IsAuthenticated)
+        User? currUser = GetCurrentUser();
+        if (currUser != null)
         {
-            var author = _DBContext.Users.FirstOrDefault(u => u.UserName == currentUser.Identity.Name);
-            var blog = _DBContext.Blogs.FirstOrDefault(b => b.Id == id);
-            if (blog != null && blog.AuthorUserName == author.UserName)
+            var blog = _DBContext.Blogs.FirstOrDefault(b => b.Id == blogId);
+            var comment = new Comment
             {
-                _DBContext.Remove(blog);
-                _DBContext.SaveChanges();
-                return Ok(true);
-            }
-        }
-        //todo - 404 not found
-        return Ok(false);
-    }
-    [HttpPost("create")]
-    public IActionResult Create([FromBody] BlogDto blogDto)
-    {
-        //make the author be the currently logged in user
-        var currentUser = HttpContext.User;
-        if (currentUser.Identity != null && currentUser.Identity.IsAuthenticated)
-        {
-            // You can access the user's unique identifier, username, or other claims here
-            var author = _DBContext.Users.FirstOrDefault(u => u.UserName == currentUser.Identity.Name);
-            // Console.WriteLine("curr user " + author.UserName);
-            var blog = new Blog
-            {
-                AuthorUserName = author.UserName,
-                Title = blogDto.Title,
-                Text = blogDto.Text,
-                Author = author
+                BlogId = blogId,
+                UserName = currUser.UserName,
+                Text = commentDto.Text,
+                Blog = blog,
+                User = currUser
             };
-            _DBContext.Blogs.Add(blog);
+            blog?.Comments.Add(comment);
+            currUser.Comments.Add(comment);
+            _DBContext.Comments.Add(comment);
             _DBContext.SaveChanges();
             return Ok(true);
         }
@@ -65,26 +62,38 @@ public class CommentController : ControllerBase
 
     }
     [HttpPost("update/{id}")]
-    public IActionResult Update(int id,[FromBody] BlogDto blogDto)
+    public IActionResult Update(int id, [FromBody] CommentDto commentDto)
     {
-        var currentUser = HttpContext.User;
-        if (currentUser.Identity != null && currentUser.Identity.IsAuthenticated)
+        User? currUser = GetCurrentUser();
+        if (currUser != null)
         {
-            // You can access the user's unique identifier, username, or other claims here
-            var author = _DBContext.Users.FirstOrDefault(u => u.UserName == currentUser.Identity.Name);
-            var blog = _DBContext.Blogs.FirstOrDefault(b => b.Id == id);
-            if (blog != null && blog.AuthorUserName == author.UserName)
+            var comment = _DBContext.Comments.FirstOrDefault(b => b.Id == id);
+            if (comment != null && comment.UserName == currUser.UserName)
             {
-                //user can only edit title or blog text
-                blog.Title = blogDto.Title;
-                blog.Text = blogDto.Text;
+                comment.Text=commentDto.Text;
                 _DBContext.SaveChanges();
-                return Ok(blog);
+                return Ok(true);
             }
             return Ok(false);
         }
         return Ok(false);
 
     }
-
+    [HttpDelete("remove/{id}")]
+    public IActionResult Remove(int id)
+    {
+        User? currUser = GetCurrentUser();
+        if (currUser != null)
+        {
+            var comment = _DBContext.Comments.FirstOrDefault(b => b.Id == id);
+            if (comment != null && comment.UserName == currUser.UserName)
+            {
+                _DBContext.Remove(comment);
+                _DBContext.SaveChanges();
+                return Ok(true);
+            }
+        }
+        //todo - 404 not found
+        return Ok(false);
+    }
 }

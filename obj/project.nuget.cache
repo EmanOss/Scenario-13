@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "nwzgPUmTfN6DXVeBMCm8TsflBabewX5fvSKEs3SCcq+BRy7S3SvF1diLsq7w1dWqL8YakIW/CS9B0qqI2WzEDw==",
+  "dgSpecHash": "0bYur+O/hGNj6UyEsWbTuXHb5c1/qhpDAGWyViUOkLobaGi7BPh0TyAPwx1J3a8L404k3WMCY8fQoDvZ0s+nFA==",
   "success": true,
   "projectFilePath": "/home/lenovo/Scenario 13/Scenario 13.csproj",
   "expectedPackageFiles": [
     "/home/lenovo/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
+    "/home/lenovo/.nuget/packages/castle.core/5.1.0/castle.core.5.1.0.nupkg.sha512",
     "/home/lenovo/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/home/lenovo/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/7.0.0/microsoft.aspnetcore.authentication.jwtbearer.7.0.0.nupkg.sha512",
     "/home/lenovo/.nuget/packages/microsoft.aspnetcore.openapi/7.0.9/microsoft.aspnetcore.openapi.7.0.9.nupkg.sha512",
@@ -13,6 +14,7 @@
     "/home/lenovo/.nuget/packages/microsoft.entityframeworkcore.abstractions/7.0.9/microsoft.entityframeworkcore.abstractions.7.0.9.nupkg.sha512",
     "/home/lenovo/.nuget/packages/microsoft.entityframeworkcore.analyzers/7.0.9/microsoft.entityframeworkcore.analyzers.7.0.9.nupkg.sha512",
     "/home/lenovo/.nuget/packages/microsoft.entityframeworkcore.design/7.0.9/microsoft.entityframeworkcore.design.7.0.9.nupkg.sha512",
+    "/home/lenovo/.nuget/packages/microsoft.entityframeworkcore.proxies/7.0.0/microsoft.entityframeworkcore.proxies.7.0.0.nupkg.sha512",
     "/home/lenovo/.nuget/packages/microsoft.entityframeworkcore.relational/7.0.9/microsoft.entityframeworkcore.relational.7.0.9.nupkg.sha512",
     "/home/lenovo/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "/home/lenovo/.nuget/packages/microsoft.extensions.caching.abstractions/7.0.0/microsoft.extensions.caching.abstractions.7.0.0.nupkg.sha512",
@@ -39,6 +41,7 @@
     "/home/lenovo/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.5.0/swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
     "/home/lenovo/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.5.0/swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512",
     "/home/lenovo/.nuget/packages/system.codedom/4.4.0/system.codedom.4.4.0.nupkg.sha512",
+    "/home/lenovo/.nuget/packages/system.diagnostics.eventlog/6.0.0/system.diagnostics.eventlog.6.0.0.nupkg.sha512",
     "/home/lenovo/.nuget/packages/system.identitymodel.tokens.jwt/6.15.1/system.identitymodel.tokens.jwt.6.15.1.nupkg.sha512",
     "/home/lenovo/.nuget/packages/system.security.cryptography.cng/4.5.0/system.security.cryptography.cng.4.5.0.nupkg.sha512",
     "/home/lenovo/.nuget/packages/system.text.encodings.web/7.0.0/system.text.encodings.web.7.0.0.nupkg.sha512",

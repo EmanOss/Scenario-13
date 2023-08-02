@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 namespace Scenario_13.Models;
 
@@ -22,7 +25,10 @@ public partial class PostgresContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql("host=localhost;port=5432;Database=postgres;username=postgres;password=postgres;sslmode=prefer");
+    {
+        optionsBuilder.UseNpgsql("host=localhost;port=5432;Database=postgres;username=postgres;password=postgres;sslmode=prefer");
+        optionsBuilder.UseLazyLoadingProxies(); // Enable lazy loading
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -48,11 +54,15 @@ public partial class PostgresContext : DbContext
                 .HasForeignKey(d => d.AuthorUserName)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_blog_user");
+
+            entity.HasMany(b => b.Comments)
+                .WithOne(c => c.Blog)
+                .HasForeignKey(c => c.BlogId);
         });
 
         modelBuilder.Entity<Comment>(entity =>
         {
-            entity.HasKey(e => new{e.BlogId, e.UserName, e.Date}).HasName("comment_pkey");
+            entity.HasKey(e => new { e.BlogId, e.UserName, e.Date }).HasName("comment_pkey");
 
             entity.ToTable("comment");
 
@@ -62,15 +72,15 @@ public partial class PostgresContext : DbContext
                 .HasColumnName("date");
             entity.Property(e => e.UserName).HasColumnName("userName");
 
-            entity.HasOne(d => d.Blog).WithMany(p => p.Comments)
-                .HasForeignKey(d => d.BlogId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_comment_blog");
+            // entity.HasOne(d => d.Blog).WithMany(p => p.Comments)
+            //     .HasForeignKey(d => d.BlogId)
+            //     .OnDelete(DeleteBehavior.ClientSetNull)
+            //     .HasConstraintName("fk_comment_blog");
 
-            entity.HasOne(d => d.User).WithMany(p => p.Comments)
-                .HasForeignKey(d => d.UserName)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_comment_user");
+            // entity.HasOne(d => d.User).WithMany(p => p.Comments)
+            //     .HasForeignKey(d => d.UserName)
+            //     .OnDelete(DeleteBehavior.ClientSetNull)
+            //     .HasConstraintName("fk_comment_user");
         });
 
         modelBuilder.Entity<User>(entity =>
@@ -85,6 +95,14 @@ public partial class PostgresContext : DbContext
             entity.Property(e => e.PasswordHash)
                 .HasMaxLength(50)
                 .HasColumnName("passwordHash");
+
+            entity.HasMany(b => b.Blogs)
+                .WithOne(c => c.Author)
+                .HasForeignKey(c => c.AuthorUserName);
+
+            entity.HasMany(b => b.Comments)
+                .WithOne(c => c.User)
+                .HasForeignKey(c => c.UserName);
         });
 
         OnModelCreatingPartial(modelBuilder);

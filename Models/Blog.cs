@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Scenario_13.Models;
 
@@ -19,5 +20,6 @@ public partial class Blog
 
     public required virtual User Author { get; set; }
 
+    [JsonIgnore]
     public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 }

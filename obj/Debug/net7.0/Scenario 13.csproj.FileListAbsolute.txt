@@ -49,3 +49,5 @@
 /home/lenovo/Scenario 13/obj/Debug/net7.0/Scenario 13.pdb
 /home/lenovo/Scenario 13/obj/Debug/net7.0/Scenario 13.genruntimeconfig.cache
 /home/lenovo/Scenario 13/obj/Debug/net7.0/ref/Scenario 13.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Castle.Core.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Proxies.dll

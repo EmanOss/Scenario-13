@@ -18,6 +18,9 @@ namespace Scenario_13.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.9")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -65,20 +68,27 @@ namespace Scenario_13.Migrations
                 {
                     b.Property<int>("BlogId")
                         .HasColumnType("integer")
-                        .HasColumnName("blogId")
-                        .HasColumnOrder(1);
+                        .HasColumnName("blogId");
 
                     b.Property<string>("UserName")
                         .HasColumnType("character varying(50)")
-                        .HasColumnName("userName")
-                        .HasColumnOrder(2);
+                        .HasColumnName("userName");
 
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("date")
-                        .HasColumnOrder(3)
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("BlogId", "UserName", "Date")
                         .HasName("comment_pkey");
@@ -123,14 +133,14 @@ namespace Scenario_13.Migrations
                     b.HasOne("Scenario_13.Models.Blog", "Blog")
                         .WithMany("Comments")
                         .HasForeignKey("BlogId")
-                        .IsRequired()
-                        .HasConstraintName("fk_comment_blog");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Scenario_13.Models.User", "User")
                         .WithMany("Comments")
                         .HasForeignKey("UserName")
-                        .IsRequired()
-                        .HasConstraintName("fk_comment_user");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Blog");
 
