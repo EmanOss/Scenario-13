@@ -95,4 +95,20 @@ public class BlogController : ControllerBase
         //todo - 404 not found
         return Ok(false);
     }
+    [HttpGet("GetStats/{id}")]
+    public IActionResult GetStats(int id)
+    {
+        var blog = _DBContext.Blogs.FirstOrDefault(b => b.Id == id);
+        if (blog != null)
+        {
+            return Ok(
+                new BlogStatisticsDto
+                {
+                    CreationDate = blog.CreationDate,
+                    AuthorUserName = blog.AuthorUserName,
+                    Comments = (List<Comment>)blog.Comments
+                });
+        }
+        return Ok(false);
+    }
 }
