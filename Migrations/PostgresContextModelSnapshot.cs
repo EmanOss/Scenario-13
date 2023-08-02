@@ -25,8 +25,11 @@ namespace Scenario_13.Migrations
             modelBuilder.Entity("Scenario_13.Models.Blog", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AuthorUserName")
                         .IsRequired()

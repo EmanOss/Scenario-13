@@ -20,24 +20,29 @@ public class BlogController : ControllerBase
     [HttpGet("GetAll")]
     public IActionResult GetAll()
     {
-        var blogs = this._DBContext.Blogs.ToList();
+        var blogs = _DBContext.Blogs.ToList();
         return Ok(blogs);
     }
     [HttpGet("GetById/{id}")]
-    public IActionResult GetById(BigInteger id)
+    public IActionResult GetById(int id)
     {
-        var blog = this._DBContext.Blogs.FirstOrDefault(b => b.Id == id);
+        var blog = _DBContext.Blogs.FirstOrDefault(b => b.Id == id);
         return Ok(blog);
     }
     [HttpDelete("remove/{id}")]
-    public IActionResult Remove(BigInteger id)
+    public IActionResult Remove(int id)
     {
-        var blog = _DBContext.Blogs.FirstOrDefault(b => b.Id == id);
-        if (blog != null)
+        var currentUser = HttpContext.User;
+        if (currentUser.Identity != null && currentUser.Identity.IsAuthenticated)
         {
-            _DBContext.Remove(blog);
-            _DBContext.SaveChanges();
-            return Ok(true);
+            var author = _DBContext.Users.FirstOrDefault(u => u.UserName == currentUser.Identity.Name);
+            var blog = _DBContext.Blogs.FirstOrDefault(b => b.Id == id);
+            if (blog != null && blog.AuthorUserName == author.UserName)
+            {
+                _DBContext.Remove(blog);
+                _DBContext.SaveChanges();
+                return Ok(true);
+            }
         }
         //todo - 404 not found
         return Ok(false);
@@ -45,20 +50,16 @@ public class BlogController : ControllerBase
     [HttpPost("create")]
     public IActionResult Create([FromBody] BlogDto blogDto)
     {
-        //  var currentUser = 
-
-
         //make the author be the currently logged in user
         var currentUser = HttpContext.User;
-
-        if (currentUser.Identity.IsAuthenticated)
+        if (currentUser.Identity != null && currentUser.Identity.IsAuthenticated)
         {
             // You can access the user's unique identifier, username, or other claims here
             var author = _DBContext.Users.FirstOrDefault(u => u.UserName == currentUser.Identity.Name);
-            Console.WriteLine("curr user "+author.UserName);
+            // Console.WriteLine("curr user " + author.UserName);
             var blog = new Blog
             {
-                AuthorUserName = blogDto.AuthorUserName,
+                AuthorUserName = author.UserName,
                 Title = blogDto.Title,
                 Text = blogDto.Text,
                 Author = author
@@ -70,24 +71,26 @@ public class BlogController : ControllerBase
         return Ok(false);
 
     }
-    [HttpPost("update")]
-    //TODO - edit to blog Dto
-    public IActionResult Update([FromBody] Blog _blog)
+    [HttpPost("update/{id}")]
+    public IActionResult Update(int id,[FromBody] BlogDto blogDto)
     {
-        //check if blog exists
-        var blog = _DBContext.Blogs.FirstOrDefault(b => b.Id == _blog.Id);
-        if (blog != null)
+        var currentUser = HttpContext.User;
+        if (currentUser.Identity != null && currentUser.Identity.IsAuthenticated)
         {
-            //user can only edit title or blog text
-            blog.Title = _blog.Title;
-            blog.Text = _blog.Text;
-            return Ok(true);
-        }
-        else
-        {
-            //todo - return 404 - not found
+            // You can access the user's unique identifier, username, or other claims here
+            var author = _DBContext.Users.FirstOrDefault(u => u.UserName == currentUser.Identity.Name);
+            var blog = _DBContext.Blogs.FirstOrDefault(b => b.Id == id);
+            if (blog != null && blog.AuthorUserName == author.UserName)
+            {
+                //user can only edit title or blog text
+                blog.Title = blogDto.Title;
+                blog.Text = blogDto.Text;
+                _DBContext.SaveChanges();
+                return Ok(blog);
+            }
             return Ok(false);
         }
+        return Ok(false);
 
     }
 

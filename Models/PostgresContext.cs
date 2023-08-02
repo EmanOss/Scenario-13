@@ -33,7 +33,7 @@ public partial class PostgresContext : DbContext
             entity.ToTable("blog");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("id");
             entity.Property(e => e.AuthorUserName).HasColumnName("authorUserName");
             entity.Property(e => e.CreationDate)
