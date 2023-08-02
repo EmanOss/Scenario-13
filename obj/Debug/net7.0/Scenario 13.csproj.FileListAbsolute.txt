@@ -5,11 +5,29 @@
 /home/lenovo/Scenario 13/bin/Debug/net7.0/Scenario 13.runtimeconfig.json
 /home/lenovo/Scenario 13/bin/Debug/net7.0/Scenario 13.dll
 /home/lenovo/Scenario 13/bin/Debug/net7.0/Scenario 13.pdb
+/home/lenovo/Scenario 13/bin/Debug/net7.0/BCrypt.Net-Next.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Humanizer.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
 /home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.AspNetCore.OpenApi.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Design.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Relational.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.Extensions.DependencyModel.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.IdentityModel.Logging.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.IdentityModel.Protocols.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.IdentityModel.Tokens.dll
 /home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.OpenApi.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Mono.TextTemplating.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Npgsql.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
 /home/lenovo/Scenario 13/bin/Debug/net7.0/Swashbuckle.AspNetCore.Swagger.dll
 /home/lenovo/Scenario 13/bin/Debug/net7.0/Swashbuckle.AspNetCore.SwaggerGen.dll
 /home/lenovo/Scenario 13/bin/Debug/net7.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/System.CodeDom.dll
+/home/lenovo/Scenario 13/bin/Debug/net7.0/System.IdentityModel.Tokens.Jwt.dll
 /home/lenovo/Scenario 13/obj/Debug/net7.0/Scenario 13.csproj.AssemblyReference.cache
 /home/lenovo/Scenario 13/obj/Debug/net7.0/Scenario 13.GeneratedMSBuildEditorConfig.editorconfig
 /home/lenovo/Scenario 13/obj/Debug/net7.0/Scenario 13.AssemblyInfoInputs.cache
@@ -31,21 +49,3 @@
 /home/lenovo/Scenario 13/obj/Debug/net7.0/Scenario 13.pdb
 /home/lenovo/Scenario 13/obj/Debug/net7.0/Scenario 13.genruntimeconfig.cache
 /home/lenovo/Scenario 13/obj/Debug/net7.0/ref/Scenario 13.dll
-/home/lenovo/Scenario 13/bin/Debug/net7.0/Humanizer.dll
-/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.dll
-/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Abstractions.dll
-/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Design.dll
-/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Relational.dll
-/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.Extensions.DependencyModel.dll
-/home/lenovo/Scenario 13/bin/Debug/net7.0/Mono.TextTemplating.dll
-/home/lenovo/Scenario 13/bin/Debug/net7.0/System.CodeDom.dll
-/home/lenovo/Scenario 13/bin/Debug/net7.0/Npgsql.dll
-/home/lenovo/Scenario 13/bin/Debug/net7.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
-/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
-/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.IdentityModel.JsonWebTokens.dll
-/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.IdentityModel.Logging.dll
-/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.IdentityModel.Protocols.dll
-/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
-/home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.IdentityModel.Tokens.dll
-/home/lenovo/Scenario 13/bin/Debug/net7.0/System.IdentityModel.Tokens.Jwt.dll
-/home/lenovo/Scenario 13/bin/Debug/net7.0/BCrypt.Net-Next.dll

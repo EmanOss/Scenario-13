@@ -6,45 +6,31 @@ namespace Scenario_13.Controllers;
 [Authorize]
 [ApiController]
 [Route("[controller]")]
-public class BlogController : ControllerBase
+public class CommentController : ControllerBase
 {
     private readonly PostgresContext _DBContext;
-    // private User _currentUser;
 
-    public BlogController(PostgresContext dBContext)
+    public CommentController(PostgresContext dBContext)
     {
         _DBContext = dBContext;
     }
-    private User? GetCurrentUser(){
-        var currentUser = HttpContext.User;
-        if (currentUser.Identity != null && currentUser.Identity.IsAuthenticated)
-        {
-            return _DBContext.Users.FirstOrDefault(u => u.UserName == currentUser.Identity.Name); 
-        }
-        return null;
-    }
 
-    [HttpGet("GetAll")]
-    public IActionResult GetAll()
+    [HttpGet("GetByBlogId/{blogId}")]
+    public IActionResult GetById(int blogId)
     {
-        var blogs = _DBContext.Blogs.ToList();
-        return Ok(blogs);
-    }
-    [HttpGet("GetById/{id}")]
-    public IActionResult GetById(int id)
-    {
-        var blog = _DBContext.Blogs.FirstOrDefault(b => b.Id == id);
+        var blog = _DBContext.Blogs.FirstOrDefault(b => b.Id == blogId);
+        
         return Ok(blog);
     }
     [HttpDelete("remove/{id}")]
     public IActionResult Remove(int id)
     {
-        User? currUser = GetCurrentUser();
-        if (currUser!=null)
+        var currentUser = HttpContext.User;
+        if (currentUser.Identity != null && currentUser.Identity.IsAuthenticated)
         {
-            // var author = _DBContext.Users.FirstOrDefault(u => u.UserName == currentUser.UserName);
+            var author = _DBContext.Users.FirstOrDefault(u => u.UserName == currentUser.Identity.Name);
             var blog = _DBContext.Blogs.FirstOrDefault(b => b.Id == id);
-            if (blog != null && blog.AuthorUserName == currUser.UserName)
+            if (blog != null && blog.AuthorUserName == author.UserName)
             {
                 _DBContext.Remove(blog);
                 _DBContext.SaveChanges();
@@ -58,20 +44,19 @@ public class BlogController : ControllerBase
     public IActionResult Create([FromBody] BlogDto blogDto)
     {
         //make the author be the currently logged in user
-        User? currUser = GetCurrentUser();
-        if (currUser!=null)
+        var currentUser = HttpContext.User;
+        if (currentUser.Identity != null && currentUser.Identity.IsAuthenticated)
         {
             // You can access the user's unique identifier, username, or other claims here
-            // var author = _DBContext.Users.FirstOrDefault(u => u.UserName == currUser.UserName);
+            var author = _DBContext.Users.FirstOrDefault(u => u.UserName == currentUser.Identity.Name);
             // Console.WriteLine("curr user " + author.UserName);
             var blog = new Blog
             {
-                AuthorUserName = currUser.UserName,
+                AuthorUserName = author.UserName,
                 Title = blogDto.Title,
                 Text = blogDto.Text,
-                Author = currUser
+                Author = author
             };
-            // author?.Blogs.Add(blog); //TODO - do i need this????
             _DBContext.Blogs.Add(blog);
             _DBContext.SaveChanges();
             return Ok(true);
@@ -82,19 +67,19 @@ public class BlogController : ControllerBase
     [HttpPost("update/{id}")]
     public IActionResult Update(int id,[FromBody] BlogDto blogDto)
     {
-        User? currUser = GetCurrentUser();
-        if (currUser!=null)
+        var currentUser = HttpContext.User;
+        if (currentUser.Identity != null && currentUser.Identity.IsAuthenticated)
         {
             // You can access the user's unique identifier, username, or other claims here
-            // var author = _DBContext.Users.FirstOrDefault(u => u.UserName == currUser.UserName);
+            var author = _DBContext.Users.FirstOrDefault(u => u.UserName == currentUser.Identity.Name);
             var blog = _DBContext.Blogs.FirstOrDefault(b => b.Id == id);
-            if (blog != null && blog.AuthorUserName == currUser.UserName)
+            if (blog != null && blog.AuthorUserName == author.UserName)
             {
                 //user can only edit title or blog text
                 blog.Title = blogDto.Title;
                 blog.Text = blogDto.Text;
                 _DBContext.SaveChanges();
-                return Ok(true);
+                return Ok(blog);
             }
             return Ok(false);
         }

@@ -55,7 +55,7 @@ public class UserController : ControllerBase
             {
                 new Claim(ClaimTypes.Name, user.UserName)
             }),
-            Expires = DateTime.Now.AddMinutes(20),
+            Expires = DateTime.Now.AddMinutes(60),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenkey), SecurityAlgorithms.HmacSha256)
         };
         var token = tokenhandler.CreateToken(tokendesc);
