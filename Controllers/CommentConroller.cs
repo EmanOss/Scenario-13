@@ -56,7 +56,7 @@ public class CommentController : ControllerBase
             currUser.Comments.Add(comment);
             _DBContext.Comments.Add(comment);
             _DBContext.SaveChanges();
-            return Ok(true);
+            return Ok(blog?.Comments);
         }
         return Ok(false);
 

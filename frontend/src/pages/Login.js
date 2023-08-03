@@ -57,7 +57,7 @@ const Login = () => {
                         localStorage.setItem('token', authToken);
                         // setToken(authToken);
                         console.log(authToken);
-                        usenavigate('/home')
+                        usenavigate('/blog')
                     }
                 }).catch((err) => {
                     toast.error('Login Failed due to :' + err.message);
