@@ -1,15 +1,11 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import TextField from '@mui/material/TextField';
-import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { useEffect, useState } from "react";
@@ -18,25 +14,21 @@ import { toast } from "react-toastify";
 import Item from './../components/Item.js';
 
 const Login = () => {
-    
-    
+
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    // const [token, setToken] = useState(localStorage.getItem('token') || '');
     const usenavigate = useNavigate();
-    
+
 
     useEffect(() => {
-        
+
         sessionStorage.clear();
     }, []);
-    
-
-
 
     const login = (e) => {
         e.preventDefault();
-        
+
         if (validate()) {
             let inputobj = {
                 "username": username,
@@ -50,12 +42,11 @@ const Login = () => {
                 return res.json();
             })
                 .then((resp) => {
-                    if (Object.keys(resp).length === 0) {
+                    if (!resp.token.length > 0) {
                         toast.error('Login failed, invalid credentials');
                     } else {
                         const authToken = resp.token;
                         localStorage.setItem('token', authToken);
-                        // setToken(authToken);
                         console.log(authToken);
                         usenavigate('/blog')
                     }
@@ -93,7 +84,7 @@ const Login = () => {
                                 </Toolbar>
                             </AppBar>
                         </Grid>
-                        
+
                         <Grid item xs={6} md={12}>
                             <Card >
                                 <CardContent>
@@ -120,9 +111,6 @@ const Login = () => {
                                     <Grid item xs={6} md={8}>
                                         <Button variant="contained" onClick={login}>Log in</Button>
                                     </Grid>
-                                    {/* <Grid item xs={6} md={2}>
-                                        <Link to="/register">Register</Link>
-                                    </Grid> */}
                                 </CardContent>
                             </Card>
                         </Grid>

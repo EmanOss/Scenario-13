@@ -1,8 +1,6 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -10,9 +8,6 @@ import Button from '@mui/material/Button';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Item from './../components/Item.js';
-import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
-import Login from './Login.js'
-
 
 const Home = () => {
   const [blogs, setBlogs] = useState(null);
@@ -50,7 +45,6 @@ const Home = () => {
   }, []);
 
   const getBlog = (blogId) => {
-    // console.log(blogId);
     usenavigate(`/blog/${blogId}`);
   };
   if (isLoading) {
@@ -71,9 +65,9 @@ const Home = () => {
                   </Typography>
                   <Button href="/create" color="inherit">Create Blog!</Button>
                   {(localStorage.getItem('token')) ?
-                                    <Button onClick={logout} color="inherit">Log out</Button>
-                                    :
-                                    <Button color="inherit" href="/login">Login</Button>}
+                    <Button onClick={logout} color="inherit">Log out</Button>
+                    :
+                    <Button color="inherit" href="/login">Login</Button>}
                 </Toolbar>
               </AppBar>
             </Grid>

@@ -7,9 +7,6 @@ import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Item from './../components/Item.js';
-
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";

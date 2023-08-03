@@ -1,5 +1,5 @@
 import React from 'react';
-import { json, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -8,7 +8,7 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Item from './../components/Item.js'
 import TextField from '@mui/material/TextField';
 import { toast } from "react-toastify";
@@ -98,18 +98,15 @@ function Blog() {
                                     </Typography>
                                     <Button href="/create" color="inherit">Create Blog!</Button>
                                     {(localStorage.getItem('token')) ?
-                                    <Button onClick={logout} color="inherit">Log out</Button>
-                                    :
-                                    <Button color="inherit" href="/login">Login</Button>}
+                                        <Button onClick={logout} color="inherit">Log out</Button>
+                                        :
+                                        <Button color="inherit" href="/login">Login</Button>}
                                 </Toolbar>
                             </AppBar>
                         </Grid>
                         <Item></Item>
                         {(localStorage.getItem('token')) ?
                             <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                                {/* <Grid item xs={2} md={12} >
-                                    <BoldItem elevation={4} fontWeight="bold">{blog.title}</BoldItem>
-                                </Grid> */}
                                 <Grid item xs={2} md={12} >
                                     <BoldItem elevation={4} fontWeight="bold">Written By: {blog.authorUserName}, On {date}</BoldItem>
                                 </Grid>
@@ -119,7 +116,6 @@ function Blog() {
                                 <Grid item xs={2} md={12} >
                                     <Item></Item>
                                 </Grid>
-
                                 <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                                     <Grid item xs={2} md={12} >
                                         <BoldItem elevation={4}>Comments</BoldItem>
