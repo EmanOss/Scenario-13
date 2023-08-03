@@ -10,6 +10,8 @@ import Button from '@mui/material/Button';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Item from './../components/Item.js';
+import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
+import Login from './Login.js'
 
 
 const Home = () => {
@@ -55,37 +57,43 @@ const Home = () => {
     return <div>Loading...</div>;
   }
   return (
+
     <>
+
       <div>
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={6} md={12}>
               <AppBar position="static">
                 <Toolbar>
-
                   <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    Home
+                    All Blogs
                   </Typography>
                   <Button href="/create" color="inherit">Create Blog!</Button>
-                  <Button onClick={logout} color="inherit">Log out</Button>
+                  {(localStorage.getItem('token')) ?
+                                    <Button onClick={logout} color="inherit">Log out</Button>
+                                    :
+                                    <Button color="inherit" href="/login">Login</Button>}
                 </Toolbar>
               </AppBar>
             </Grid>
             <Item></Item>
             {(localStorage.getItem('token')) ?
-              (<Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+              <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                 {blogs.map((blog) => (
                   <Grid item xs={2} sm={4} md={4} >
                     <Item key={blog.id} onClick={() => getBlog(blog.id)}>{blog.title}</Item>
                   </Grid>
                 ))}
-              </Grid>)
+              </Grid>
               :
-              (
+              <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+
                 <Grid item xs={2} sm={4} md={4} >
-                  <Item>Error!</Item>
+                  <Item>Please Log in first!</Item>
                 </Grid>
-              )}
+              </Grid>
+            }
           </Grid>
         </Box>
       </div>

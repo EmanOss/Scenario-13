@@ -67,38 +67,49 @@ function Create() {
                                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                                         Create a Blog!
                                     </Typography>
+                                    {(localStorage.getItem('token')) ?
                                     <Button onClick={logout} color="inherit">Log out</Button>
+                                    :
+                                    <Button color="inherit" href="/login">Login</Button>}
                                 </Toolbar>
                             </AppBar>
                         </Grid>
+                        {(localStorage.getItem('token')) ?
+                            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
 
-                        <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                <Grid item xs={6} md={12} container spacing={2} justifyContent="center" alignItems="center">
+                                    <Grid item md={12}></Grid>
+                                    <Grid item xs={6} md={8}>
+                                        <TextField
+                                            required
+                                            id="outlined"
+                                            label="Title"
+                                            onChange={e => setTitle(e.target.value)}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={6} md={8}>
+                                        <TextField
+                                            required
+                                            multiline
+                                            rows={15}
+                                            id="outlined-textarea"
+                                            label="Text"
+                                            onChange={e => setText(e.target.value)}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={6} md={8}>
+                                        <Button variant="contained" onClick={createBlog}>Create</Button>
+                                    </Grid>
+                                </Grid>
+                            </div>
+                            :
+                            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
 
-                            <Grid item xs={6} md={12} container spacing={2} justifyContent="center" alignItems="center">
-                                <Grid item md={12}></Grid>
-                                <Grid item xs={6} md={8}>
-                                    <TextField
-                                        required
-                                        id="outlined"
-                                        label="Title"
-                                        onChange={e => setTitle(e.target.value)}
-                                    />
-                                </Grid>
-                                <Grid item xs={6} md={8}>
-                                    <TextField
-                                        required
-                                        multiline
-                                        rows={15}
-                                        id="outlined-textarea"
-                                        label="Text"
-                                        onChange={e => setText(e.target.value)}
-                                    />
-                                </Grid>
-                                <Grid item xs={6} md={8}>
-                                    <Button variant="contained" onClick={createBlog}>Create</Button>
+                                <Grid item xs={2} sm={4} md={4} >
+                                    <Item>Please Log in first!</Item>
                                 </Grid>
                             </Grid>
-                        </div>
+                        }
                     </Grid>
                 </Box>
             </div>

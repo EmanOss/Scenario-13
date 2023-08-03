@@ -3,36 +3,31 @@ import { json, useParams } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import { useEffect, useState } from "react";
-import { Link, usenavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Item from './../components/Item.js'
 import TextField from '@mui/material/TextField';
 import { toast } from "react-toastify";
 
-
-
 function Blog() {
     const { blogId } = useParams();
-    // const [title, setTitle] = useState('');
-    // const [text, setText] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    // const [comments, setComments] = useState(null);
     const [blog, setBlog] = useState(null);
     const [newComment, setNewComment] = useState('');
     const [refresh, setRefresh] = useState(false);
     const [date, setDate] = useState("");
-    
+
+
+    const usenavigate = useNavigate();
 
     const logout = () => {
         localStorage.removeItem('token');
-        // usenavigate('/login')
-
+        usenavigate('/login')
     };
     useEffect(() => {
         //getting blog
@@ -47,12 +42,8 @@ function Blog() {
                     throw new Error('Request failed!');
                 }
                 const jsonData = await response.json();
-                // setTitle(jsonData.title);
-                // setText(jsonData.text);
                 setBlog(jsonData);
                 setDate(jsonData.creationDate.split('T')[0]);
-                // console.log("DATE"+ date);
-                // setComments(jsonData.comments);
                 console.log(jsonData.creationDate);
             } catch (error) {
                 setError(error.message);
@@ -83,25 +74,10 @@ function Blog() {
                 },
                 body: JSON.stringify(inputobj)
             }).then((res) => {
-                // this.setComments((comments) => ([...comments, newComment]));
-                // this.setComments(comments);
                 setNewComment('');
                 setRefresh(!refresh);
                 return res.json();
             })
-                // .then((resp) => {
-                //     if (Object.keys(resp).length === 0) {
-                //         toast.error('Comment failed, invalid credentials');
-                //     } else {
-                //         // setComments([...comments, newComment]);
-                //         // setNewComment('');
-                //         // this.setComments((comments) => ([...comments, newComment]));
-                //         // setNewComment('');
-                //         window.location.reload();
-                //         console.log("IN ELSEE");
-
-                //     }
-                // })
                 .catch((err) => {
                     toast.error('Comment Failed due to :' + err.message);
                 });
@@ -118,55 +94,67 @@ function Blog() {
                                 <Toolbar>
 
                                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                                        Home
+                                        {blog.title}
                                     </Typography>
                                     <Button href="/create" color="inherit">Create Blog!</Button>
+                                    {(localStorage.getItem('token')) ?
                                     <Button onClick={logout} color="inherit">Log out</Button>
+                                    :
+                                    <Button color="inherit" href="/login">Login</Button>}
                                 </Toolbar>
                             </AppBar>
                         </Grid>
                         <Item></Item>
-                        <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                            <Grid item xs={2} md={12} >
-                                <BoldItem elevation={4} fontWeight="bold">{blog.title}</BoldItem>
-                            </Grid>
-                            <Grid item xs={2} md={12} >
-                                <BoldItem elevation={4} fontWeight="bold">Written By: {blog.authorUserName}, On {date}</BoldItem>
-                            </Grid>
-                            <Grid item xs={2} md={12} >
-                                <Item elevation={4}>{blog.text}</Item>
-                            </Grid>
-                            <Grid item xs={2} md={12} >
-                                <Item></Item>
-                            </Grid>
-
+                        {(localStorage.getItem('token')) ?
                             <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+                                {/* <Grid item xs={2} md={12} >
+                                    <BoldItem elevation={4} fontWeight="bold">{blog.title}</BoldItem>
+                                </Grid> */}
                                 <Grid item xs={2} md={12} >
-                                    <BoldItem elevation={4}>Comments</BoldItem>
+                                    <BoldItem elevation={4} fontWeight="bold">Written By: {blog.authorUserName}, On {date}</BoldItem>
                                 </Grid>
-                                {blog.comments.map((comment) => (
-                                    <Grid item xs={2} sm={4} md={4} >
-                                        <Item key={comment.id} >
-                                            <BoldItem>{comment.text}</BoldItem>
-                                            <Item>by user: {comment.userName}</Item>
+                                <Grid item xs={2} md={12} >
+                                    <Item elevation={4}>{blog.text}</Item>
+                                </Grid>
+                                <Grid item xs={2} md={12} >
+                                    <Item></Item>
+                                </Grid>
 
-                                        </Item>
-
+                                <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+                                    <Grid item xs={2} md={12} >
+                                        <BoldItem elevation={4}>Comments</BoldItem>
                                     </Grid>
-                                ))}
-                                <Grid item xs={2} sm={4} md={4} >
-                                    <Item>
-                                        <TextField
-                                            id="outlined"
-                                            label="Add Comment"
-                                            value={newComment}
-                                            onChange={e => setNewComment(e.target.value)}
-                                        />
-                                        <Button variant="contained" onClick={addComment}>Add Comment</Button>
-                                    </Item>
+                                    {blog.comments.map((comment) => (
+                                        <Grid item xs={2} sm={4} md={4} >
+                                            <Item key={comment.id} >
+                                                <BoldItem>{comment.text}</BoldItem>
+                                                <Item>by user: {comment.userName}</Item>
+
+                                            </Item>
+
+                                        </Grid>
+                                    ))}
+                                    <Grid item xs={2} sm={4} md={4} >
+                                        <Item>
+                                            <TextField
+                                                id="outlined"
+                                                label="Add Comment"
+                                                value={newComment}
+                                                onChange={e => setNewComment(e.target.value)}
+                                            />
+                                            <Button variant="contained" onClick={addComment}>Add Comment</Button>
+                                        </Item>
+                                    </Grid>
                                 </Grid>
                             </Grid>
-                        </Grid>
+                            :
+                            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+
+                                <Grid item xs={2} sm={4} md={4} >
+                                    <Item>Please Log in first!</Item>
+                                </Grid>
+                            </Grid>
+                        }
                     </Grid>
                 </Box>
             </div>
