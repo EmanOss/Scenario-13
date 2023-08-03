@@ -42,6 +42,7 @@ public class UserController : ControllerBase
     [HttpPost("Authenticate")]
     public async Task<IActionResult> Authenticate([FromBody] UserDto userDto)
     {
+        Console.WriteLine("username at auth: "+userDto.UserName);
         var user = await _DBContext.Users.FirstOrDefaultAsync(item => item.UserName == userDto.UserName);
         if (user == null || !BCrypt.Net.BCrypt.Verify(userDto.Password, user.PasswordHash))
             return Unauthorized();
@@ -60,10 +61,10 @@ public class UserController : ControllerBase
         };
         var token = tokenhandler.CreateToken(tokendesc);
         string finaltoken = tokenhandler.WriteToken(token);
-
+        // var res = ;
         // var response = new TokenResponse() { jwttoken = finaltoken, refreshtoken = await refereshTokenGenerator.GenerateToken(userCred.username) };
 
-        return Ok(finaltoken);
+        return Ok(new {token = finaltoken});
     }
     // [Authorize]
     // [HttpPost("update/{oldUserName}")]
