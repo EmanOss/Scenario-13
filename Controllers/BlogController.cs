@@ -46,7 +46,7 @@ public class BlogController : ControllerBase
             var blog = new Blog
             {
                 AuthorUserName = currUser.UserName,
-                Title = blogDto.Title,
+                Title = blogDto.Title.ToUpper(),
                 Text = blogDto.Text,
                 Author = currUser
             };
@@ -68,7 +68,7 @@ public class BlogController : ControllerBase
             if (blog != null && blog.AuthorUserName == currUser.UserName)
             {
                 //user can only edit title or blog text
-                blog.Title = blogDto.Title;
+                blog.Title = blogDto.Title.ToUpper();
                 blog.Text = blogDto.Text;
                 _DBContext.SaveChanges();
                 return Ok(true);

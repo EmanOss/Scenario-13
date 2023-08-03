@@ -26,9 +26,8 @@ function Blog() {
     const [blog, setBlog] = useState(null);
     const [newComment, setNewComment] = useState('');
     const [refresh, setRefresh] = useState(false);
-    // const [refreshComments, setRefreshComments] =
-
-    // const usenavigate = usenavigate();
+    const [date, setDate] = useState("");
+    
 
     const logout = () => {
         localStorage.removeItem('token');
@@ -51,8 +50,10 @@ function Blog() {
                 // setTitle(jsonData.title);
                 // setText(jsonData.text);
                 setBlog(jsonData);
+                setDate(jsonData.creationDate.split('T')[0]);
+                // console.log("DATE"+ date);
                 // setComments(jsonData.comments);
-                console.log(jsonData);
+                console.log(jsonData.creationDate);
             } catch (error) {
                 setError(error.message);
             } finally {
@@ -130,7 +131,7 @@ function Blog() {
                                 <BoldItem elevation={4} fontWeight="bold">{blog.title}</BoldItem>
                             </Grid>
                             <Grid item xs={2} md={12} >
-                                <BoldItem elevation={4} fontWeight="bold">Written By: {blog.AuthorUserName}</BoldItem>
+                                <BoldItem elevation={4} fontWeight="bold">Written By: {blog.authorUserName}, On {date}</BoldItem>
                             </Grid>
                             <Grid item xs={2} md={12} >
                                 <Item elevation={4}>{blog.text}</Item>
