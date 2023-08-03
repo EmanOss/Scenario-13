@@ -13,90 +13,30 @@ import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Item from './../components/Item.js';
 
-// const Item = styled(Paper)(({ theme }) => ({
-//   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-//   ...theme.typography.body2,
-//   padding: theme.spacing(1),
-//   textAlign: 'center',
-//   color: theme.palette.text.secondary,
-// }));
-
-// export default function Login() {
-//   return (
-{/* <div>
-  <Box sx={{ flexGrow: 1 }}>
-    <Grid container spacing={2}>
-      <Grid item xs={6} md={12}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Blogs
-            </Typography>
-            <Button color="inherit">Login</Button>
-          </Toolbar>
-        </AppBar>
-      </Grid>
-      <Grid item xs={6} md={12}>
-        <Card >
-        <CardContent>
-        <Grid item xs={6} md={12}>
-            <TextField
-              required
-              id="outlined"
-              label="Required"
-              defaultValue="Username"
-            />
-          </Grid>
-          <Grid item xs={6} md={8}>
-
-          </Grid>
-          <Grid item xs={6} md={8}>
-            <TextField
-              id="outlined-password-input"
-              label="Password"
-              type="password"
-              autoComplete="current-password"
-            />
-          </Grid>
-          <Grid item xs={6} md={8}>
-            <Button variant="contained">Log in</Button>
-          </Grid>
-          </CardContent>
-        </Card>
-      </Grid>
-    </Grid>
-  </Box>
-</div> */}
-
-//   );
-// }
 const Login = () => {
+    
+    
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     // const [token, setToken] = useState(localStorage.getItem('token') || '');
-
     const usenavigate = useNavigate();
+    
 
     useEffect(() => {
+        
         sessionStorage.clear();
     }, []);
+    
 
 
 
     const login = (e) => {
         e.preventDefault();
+        
         if (validate()) {
             let inputobj = {
                 "username": username,
@@ -136,13 +76,6 @@ const Login = () => {
         }
         return result;
     }
-    const Item = styled(Paper)(({ theme }) => ({
-        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-        ...theme.typography.body2,
-        padding: theme.spacing(1),
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
-    }));
 
     return (
         <>
@@ -160,7 +93,7 @@ const Login = () => {
                                 </Toolbar>
                             </AppBar>
                         </Grid>
-                        <Item></Item>
+                        
                         <Grid item xs={6} md={12}>
                             <Card >
                                 <CardContent>

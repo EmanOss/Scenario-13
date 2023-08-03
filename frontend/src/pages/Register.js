@@ -6,7 +6,6 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { useEffect, useState } from "react";
@@ -33,15 +32,15 @@ const Home = () => {
             }).then((res) => {
                 return res.json();
             })
-            .then((resp) => {
-                if (Object.keys(resp).length === 0) {
-                    toast.error('Register failed, invalid credentials');
-                } else {
-                    usenavigate('/login')
-                }
-            }).catch((err) => {
-                toast.error('Register Failed due to :' + err.message);
-            });
+                .then((resp) => {
+                    if (Object.keys(resp).length === 0) {
+                        toast.error('Register failed, invalid credentials');
+                    } else {
+                        usenavigate('/login')
+                    }
+                }).catch((err) => {
+                    toast.error('Register Failed due to :' + err.message);
+                });
         }
     }
     const validate = () => {
@@ -75,18 +74,19 @@ const Home = () => {
                             <Card >
                                 <CardContent>
                                     <Grid item xs={6} md={12}>
-                                        <TextField
+                                    <TextField
                                             required
                                             id="outlined"
-                                            label="Required"
-                                            defaultValue="Username"
+                                            label="UserName"
+                                            value={username}
                                             onChange={e => setUsername(e.target.value)}
                                         />
                                     </Grid>
                                     <Grid item xs={6} md={8}>
                                     </Grid>
                                     <Grid item xs={6} md={8}>
-                                        <TextField
+                                    <TextField
+                                            required
                                             id="outlined-password-input"
                                             label="Password"
                                             type="password"
@@ -97,7 +97,7 @@ const Home = () => {
                                     <Grid item xs={6} md={8}>
                                         <Button variant="contained" onClick={register}>Register</Button>
                                     </Grid>
-                                
+
                                 </CardContent>
                             </Card>
                         </Grid>

@@ -7,15 +7,10 @@ import Grid from '@mui/material/Grid';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import TextField from '@mui/material/TextField';
-
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import Item from './../components/Item.js';
+
 
 const Home = () => {
   const [blogs, setBlogs] = useState(null);
@@ -27,7 +22,6 @@ const Home = () => {
   const logout = () => {
     localStorage.removeItem('token');
     usenavigate('/login')
-
   };
   useEffect(() => {
     //getting all blogs
@@ -53,19 +47,12 @@ const Home = () => {
     fetchData();
   }, []);
 
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  }));
+  const getBlog = (blogId) => {
+    // console.log(blogId);
+    usenavigate(`/blog/${blogId}`);
+  };
   if (isLoading) {
     return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
   }
   return (
     <>
@@ -79,18 +66,26 @@ const Home = () => {
                   <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     Home
                   </Typography>
+                  <Button href="/create" color="inherit">Create Blog!</Button>
                   <Button onClick={logout} color="inherit">Log out</Button>
                 </Toolbar>
               </AppBar>
             </Grid>
             <Item></Item>
-            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-              {blogs.map((item) => (
-                <Grid item xs={2} sm={4} md={4} key={item.id}>
-                  <Item>{item.title}</Item>
+            {(localStorage.getItem('token')) ?
+              (<Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+                {blogs.map((blog) => (
+                  <Grid item xs={2} sm={4} md={4} >
+                    <Item key={blog.id} onClick={() => getBlog(blog.id)}>{blog.title}</Item>
+                  </Grid>
+                ))}
+              </Grid>)
+              :
+              (
+                <Grid item xs={2} sm={4} md={4} >
+                  <Item>Error!</Item>
                 </Grid>
-              ))}
-            </Grid>
+              )}
           </Grid>
         </Box>
       </div>

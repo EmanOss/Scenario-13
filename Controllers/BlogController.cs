@@ -53,7 +53,7 @@ public class BlogController : ControllerBase
             currUser?.Blogs.Add(blog);
             _DBContext.Blogs.Add(blog);
             _DBContext.SaveChanges();
-            return Ok(true);
+            return Ok(new {blogId = blog.Id});
         }
         return Ok(false);
 
