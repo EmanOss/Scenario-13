@@ -1,17 +1,14 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Item from './../components/Item.js'
 import TextField from '@mui/material/TextField';
 import { toast } from "react-toastify";
+import NavBar from './../components/NavBar.js';
 
 function Blog() {
     const { blogId } = useParams();
@@ -86,7 +83,7 @@ function Blog() {
 
     return (
         <>
-            <div>
+            {/* <div>
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid container spacing={2}>
                         <Grid item xs={6} md={12}>
@@ -153,7 +150,54 @@ function Blog() {
                         }
                     </Grid>
                 </Box>
-            </div>
+            </div> */}
+
+            <>
+                <Grid item xs={12} md={12} >
+                    <NavBar title={blog.title} createPage={false} />
+                </Grid>
+                {(localStorage.getItem('token')) ?
+                    <Grid item xs={10} md={10} direction="row" spacing={2} justifyContent="center" alignItems="center" sx={{ padding: 5 }}>
+                        <Grid container xs={12} md={12} spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} direction="row" justifyContent="center" alignItems="center" >
+                            <Grid item xs={2} md={12} >
+                                <BoldItem elevation={4} fontWeight="bold">Written By: {blog.authorUserName}, On {date}</BoldItem>
+                            </Grid>
+                            <Grid item xs={2} md={12} >
+                                <Item elevation={4}>{blog.text}</Item>
+                            </Grid>
+                            <Grid item xs={2} md={12} >
+                                <BoldItem elevation={4}>Comments</BoldItem>
+                            </Grid>
+                            {blog.comments.map((comment) => (
+                                <Grid item xs={2} sm={4} md={4} >
+                                    <Item key={comment.id} >
+                                        <BoldItem>{comment.text}</BoldItem>
+                                        <Item>By User: {comment.userName}</Item>
+                                    </Item>
+                                </Grid>
+                            ))}
+                            <Grid item xs={2} sm={4} md={4} >
+                                <Item>
+                                    <TextField
+                                        id="outlined"
+                                        label="Add Comment"
+                                        value={newComment}
+                                        onChange={e => setNewComment(e.target.value)}
+                                    />
+                                    <Button variant="contained" onClick={addComment}>Add Comment</Button>
+                                </Item>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    :
+                    <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+
+                        <Grid item xs={2} sm={4} md={4} >
+                            <Item>Please Log in first!</Item>
+                        </Grid>
+                    </Grid>
+                }
+            </>
         </>
     );
 }

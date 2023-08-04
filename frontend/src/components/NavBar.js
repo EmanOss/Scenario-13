@@ -3,7 +3,7 @@ import { Toolbar, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 
-function NavBar({ title, createPage }) {
+function NavBar({ title, createPage, loginPage }) {
     const usenavigate = useNavigate();
 
     const logout = () => {
@@ -27,7 +27,13 @@ function NavBar({ title, createPage }) {
                         <Button onClick={logout} color="inherit">Log out</Button>
                     </>
                     :
-                    <Button color="inherit" href="/login">Login</Button>}
+                    <>
+                    {(loginPage)?
+                        <Button color="inherit" href="/Register">Register</Button>
+                        :
+                        <Button color="inherit" href="/login">Login</Button>
+                    }
+                    </>}
             </Toolbar>
         </AppBar>
     )

@@ -1,17 +1,11 @@
 import * as React from 'react';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Item from './../components/Item.js';
+import NavBar from './../components/NavBar.js';
 
 const Login = () => {
 
@@ -70,53 +64,35 @@ const Login = () => {
 
     return (
         <>
-            <div>
-                <Box sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={6} md={12}>
-                            <AppBar position="static">
-                                <Toolbar>
+            <Grid item xs={12} md={12} >
+                <NavBar title="Login" loginPage={true} />
+            </Grid>
+            <Grid container xs={10} md={10} direction="column" spacing={2} justifyContent="center" alignItems="center" sx={{ padding: 5 }}>
+                {/* IF I WANT THE TEXT FIELDS TO THE LEFT ADD THIS  sx={{ width: '100%', display: 'flex', justifyContent: 'flex-start' }}*/}
+                <Grid item xs={12} md={12}>
+                    <TextField
+                        required
+                        id="outlined"
+                        label="UserName"
+                        value={username}
+                        onChange={e => setUsername(e.target.value)}
+                    />
+                </Grid>
+                <Grid item xs={12} md={12} >
+                    <TextField
+                        required
+                        id="outlined-password-input"
+                        label="Password"
+                        type="password"
+                        autoComplete="current-password"
+                        onChange={e => setPassword(e.target.value)}
+                    />
+                </Grid>
+                <Grid item xs={12} md={12} >
+                    <Button variant="contained" onClick={login}>Log in</Button>
+                </Grid>
+            </Grid>
 
-                                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                                        Login
-                                    </Typography>
-                                    <Button href="/register" color="inherit">Register</Button>
-                                </Toolbar>
-                            </AppBar>
-                        </Grid>
-
-                        <Grid item xs={6} md={12}>
-                            <Card >
-                                <CardContent>
-                                    <Grid item xs={6} md={12}>
-                                        <TextField
-                                            required
-                                            id="outlined"
-                                            label="UserName"
-                                            value={username}
-                                            onChange={e => setUsername(e.target.value)}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={6} md={8}>
-                                        <TextField
-                                            required
-                                            id="outlined-password-input"
-                                            label="Password"
-                                            type="password"
-                                            autoComplete="current-password"
-                                            onChange={e => setPassword(e.target.value)}
-                                        />
-                                    </Grid>
-                                    <Item></Item>
-                                    <Grid item xs={6} md={8}>
-                                        <Button variant="contained" onClick={login}>Log in</Button>
-                                    </Grid>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    </Grid>
-                </Box>
-            </div>
         </>
     );
 }
