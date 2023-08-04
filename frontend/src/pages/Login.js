@@ -6,7 +6,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import NavBar from './../components/NavBar.js';
+import Item from './../components/Item.js';
 import BASE_URL from '../ApiConfig.js';
+import Paper from '@mui/material/Paper';
+
 
 const Login = () => {
 
@@ -70,6 +73,7 @@ const Login = () => {
             </Grid>
             <Grid container xs={10} md={10} direction="column" spacing={2} justifyContent="center" alignItems="center" sx={{ padding: 5 }}>
                 {/* IF I WANT THE TEXT FIELDS TO THE LEFT ADD THIS  sx={{ width: '100%', display: 'flex', justifyContent: 'flex-start' }}*/}
+                
                 <Grid item xs={12} md={12}>
                     <TextField
                         required
@@ -79,6 +83,7 @@ const Login = () => {
                         onChange={e => setUsername(e.target.value)}
                     />
                 </Grid>
+                
                 <Grid item xs={12} md={12} >
                     <TextField
                         required

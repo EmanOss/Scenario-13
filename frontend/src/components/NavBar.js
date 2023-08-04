@@ -13,7 +13,7 @@ function NavBar({ title, createPage, loginPage, blogPage }) {
 
     return (
         <AppBar position="static" >
-            <Toolbar>
+            <Toolbar sx={{ backgroundColor: 'rgba(150, 75, 40, 1)' }}>
                 <Typography variant="h5" component="div" sx={{ flexGrow: 1, paddingLeft: '15%' }} >
                     {title}
                 </Typography>

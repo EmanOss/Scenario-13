@@ -9,24 +9,31 @@ import { Grid } from '@mui/material';
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import Box from '@mui/material/Box';
+import './css/BackgroundImage.css';
 
 function App() {
   return (
-      <Box sx={{flexDirection: "column",flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Grid container spacing={0} xs={12} md={12} justifyContent="center" alignItems="center" sx={{ flexGrow: 1 }}>
-                  <BrowserRouter>
-                    <Routes>
-                      <Route path="/login" element={<Login />} />
-                      <Route path="/blog" element={<Home />} />
-                      <Route path="/register" element={<Register />} />
-                      <Route path="/blog/:blogId" element={<Blog />} />
-                      <Route path="/create" element={<Create />} />
-                      <Route path="*" element={<Navigate to="/login" replace />} />
-                    </Routes>
-                  </BrowserRouter>
-                  <ToastContainer />
-        </Grid>
-      </Box>
+
+<div className="background-container">
+      <div className="image-overlay"></div>
+      <div className="content">
+    <Box sx={{ flexDirection: "column", flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <Grid container spacing={0} xs={12} md={12} justifyContent="center" alignItems="center" sx={{ flexGrow: 1 }}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/blog" element={<Home />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/blog/:blogId" element={<Blog />} />
+            <Route path="/create" element={<Create />} />
+            <Route path="*" element={<Navigate to="/login" replace />} />
+          </Routes>
+        </BrowserRouter>
+        <ToastContainer />
+      </Grid>
+    </Box>
+    </div>
+    </div>
   );
 }
 

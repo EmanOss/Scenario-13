@@ -59,7 +59,8 @@ function Create() {
                                 required
                                 id="outlined"
                                 label="Title"
-                                sx={{ width: '100%' }}
+                                value={title}
+                                sx={{ width: '100%', backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
                                 onChange={e => setTitle(e.target.value)}
                             />
                         </Grid>
@@ -69,8 +70,9 @@ function Create() {
                                 multiline
                                 rows={15}
                                 id="outlined-textarea"
+                                value={text}
                                 label="Text"
-                                sx={{ width: '100%' }}
+                                sx={{ width: '100%', backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
                                 onChange={e => setText(e.target.value)}
                             />
                         </Grid>

@@ -10,6 +10,8 @@ import TextField from '@mui/material/TextField';
 import { toast } from "react-toastify";
 import NavBar from './../components/NavBar.js';
 import BASE_URL from '../ApiConfig.js';
+import BoldItem from './../components/BoldItem.js';
+
 
 function Blog() {
     const { blogId } = useParams();
@@ -23,10 +25,6 @@ function Blog() {
 
     const usenavigate = useNavigate();
 
-    const logout = () => {
-        localStorage.removeItem('token');
-        usenavigate('/login')
-    };
     useEffect(() => {
         //getting blog
         const fetchData = async () => {
@@ -51,9 +49,7 @@ function Blog() {
         };
         fetchData();
     }, [refresh]);
-    const BoldItem = styled(Item)(({ theme }) => ({
-        fontWeight: 'bold', // Apply bold font weight to BoldItem
-    }));
+    
     if (isLoading) {
         return <div>Loading...</div>;
     }
