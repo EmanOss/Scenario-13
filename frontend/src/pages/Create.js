@@ -44,7 +44,6 @@ function Create() {
                     if (Object.keys(resp).length === 0) {
                         toast.error('Creation failed, invalid credentials');
                     } else {
-                        // console.log(resp.id)
                         usenavigate(`/blog/${resp.blogId}`);
                     }
                 }).catch((err) => {
@@ -54,63 +53,66 @@ function Create() {
     };
 
     return (
+
+
         <>
-            <div >
-                <Box sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={6} md={12} >
-                            <AppBar position="static">
-                                <Toolbar>
-                                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                                        Create a Blog!
-                                    </Typography>
-                                    {(localStorage.getItem('token')) ?
-                                    <Button onClick={logout} color="inherit">Log out</Button>
-                                    :
-                                    <Button color="inherit" href="/login">Login</Button>}
-                                </Toolbar>
-                            </AppBar>
-                        </Grid>
+            <Grid item xs={12} md={12} >
+                <AppBar position="static" >
+                    <Toolbar>
+                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} >
+                            Create a Blog!
+                        </Typography>
                         {(localStorage.getItem('token')) ?
-                            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-
-                                <Grid item xs={6} md={12} container spacing={2} justifyContent="center" alignItems="center">
-                                    <Grid item md={12}></Grid>
-                                    <Grid item xs={6} md={8}>
-                                        <TextField
-                                            required
-                                            id="outlined"
-                                            label="Title"
-                                            onChange={e => setTitle(e.target.value)}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={6} md={8}>
-                                        <TextField
-                                            required
-                                            multiline
-                                            rows={15}
-                                            id="outlined-textarea"
-                                            label="Text"
-                                            onChange={e => setText(e.target.value)}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={6} md={8}>
-                                        <Button variant="contained" onClick={createBlog}>Create</Button>
-                                    </Grid>
-                                </Grid>
-                            </div>
+                            <>
+                                <Button onClick={()=>usenavigate('/blog')} color="inherit">All Blogs</Button>
+                                <Button onClick={logout} color="inherit">Log out</Button>
+                            </>
                             :
-                            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+                            <Button color="inherit" href="/login">Login</Button>}
+                    </Toolbar>
+                </AppBar>
+            </Grid>
+            {(localStorage.getItem('token')) ?
+                <Grid item xs={10} md={10} direction="row" spacing={2} justifyContent="center" alignItems="center" sx={{ padding: 5 }}>
 
-                                <Grid item xs={2} sm={4} md={4} >
-                                    <Item>Please Log in first!</Item>
-                                </Grid>
-                            </Grid>
-                        }
+                    <Grid container xs={10} md={10} spacing={2} direction="row" justifyContent="center" alignItems="center">
+                        <Grid item xs={12} md={12}>
+                            <TextField
+                                required
+                                id="outlined"
+                                label="Title"
+                                sx={{ width: '100%' }}
+                                onChange={e => setTitle(e.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={12}>
+                            <TextField
+                                required
+                                multiline
+                                rows={15}
+                                id="outlined-textarea"
+                                label="Text"
+                                sx={{ width: '100%' }}
+                                onChange={e => setText(e.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs={6} md={12} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                            <Button variant="contained" onClick={createBlog}>Create</Button>
+                        </Grid>
                     </Grid>
-                </Box>
-            </div>
+                </Grid>
+                :
+                <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+
+                    <Grid item xs={2} sm={4} md={4} >
+                        <Item>Please Log in first!</Item>
+                    </Grid>
+                </Grid>
+            }
         </>
+
+
+
     );
 }
 

@@ -124,7 +124,7 @@ function Blog() {
                                         <Grid item xs={2} sm={4} md={4} >
                                             <Item key={comment.id} >
                                                 <BoldItem>{comment.text}</BoldItem>
-                                                <Item>by user: {comment.userName}</Item>
+                                                <Item>By User: {comment.userName}</Item>
 
                                             </Item>
 
