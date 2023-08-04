@@ -1,12 +1,9 @@
 import * as React from 'react';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Item from './../components/Item.js';
+import NavBar from './../components/NavBar.js';
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -16,11 +13,6 @@ function Create() {
     const [text, setText] = useState('');
 
     const usenavigate = useNavigate();
-
-    const logout = () => {
-        localStorage.removeItem('token');
-        usenavigate('/login')
-    };
 
     const createBlog = (e) => {
         e.preventDefault();
@@ -53,24 +45,9 @@ function Create() {
     };
 
     return (
-
-
         <>
             <Grid item xs={12} md={12} >
-                <AppBar position="static" >
-                    <Toolbar>
-                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} >
-                            Create a Blog!
-                        </Typography>
-                        {(localStorage.getItem('token')) ?
-                            <>
-                                <Button onClick={()=>usenavigate('/blog')} color="inherit">All Blogs</Button>
-                                <Button onClick={logout} color="inherit">Log out</Button>
-                            </>
-                            :
-                            <Button color="inherit" href="/login">Login</Button>}
-                    </Toolbar>
-                </AppBar>
+                <NavBar title="Create a Blog!" createPage={true} />
             </Grid>
             {(localStorage.getItem('token')) ?
                 <Grid item xs={10} md={10} direction="row" spacing={2} justifyContent="center" alignItems="center" sx={{ padding: 5 }}>
@@ -110,9 +87,6 @@ function Create() {
                 </Grid>
             }
         </>
-
-
-
     );
 }
 
