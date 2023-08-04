@@ -7,6 +7,7 @@ import NavBar from './../components/NavBar.js';
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import BASE_URL from '../ApiConfig.js';
 
 function Create() {
     const [title, setTitle] = useState('');
@@ -21,7 +22,7 @@ function Create() {
                 "title": title,
                 "text": text,
             };
-            fetch("http://localhost:5059/Blog/create", {
+            fetch(`${BASE_URL}/Blog/create`, {
                 method: 'POST',
                 headers:
                 {

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Item from './../components/Item.js';
 import NavBar from './../components/NavBar.js';
+import BASE_URL from '../ApiConfig.js';
 
 const Home = () => {
   const [blogs, setBlogs] = useState(null);
@@ -16,7 +17,7 @@ const Home = () => {
     //getting all blogs
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5059/Blog/GetAll', {
+        const response = await fetch(`${BASE_URL}/Blog/GetAll`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
           },

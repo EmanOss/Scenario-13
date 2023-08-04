@@ -3,7 +3,7 @@ import { Toolbar, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 
-function NavBar({ title, createPage, loginPage }) {
+function NavBar({ title, createPage, loginPage, blogPage }) {
     const usenavigate = useNavigate();
 
     const logout = () => {
@@ -19,20 +19,26 @@ function NavBar({ title, createPage, loginPage }) {
                 </Typography>
                 {(localStorage.getItem('token')) ?
                     <>
-                        {(createPage) ?
-                            <Button onClick={() => usenavigate('/blog')} color="inherit">All Blogs</Button>
-                            :
-                            <Button href="/create" color="inherit">Create Blog!</Button>
+                        {
+                            (blogPage) ?
+                                <><Button onClick={() => usenavigate('/blog')} color="inherit">All Blogs</Button>
+
+                                    <Button href="/create" color="inherit">Create Blog!</Button></>
+                                :
+                                (createPage) ?
+                                    <Button onClick={() => usenavigate('/blog')} color="inherit">All Blogs</Button>
+                                    :
+                                    <Button href="/create" color="inherit">Create Blog!</Button>
                         }
                         <Button onClick={logout} color="inherit">Log out</Button>
                     </>
                     :
                     <>
-                    {(loginPage)?
-                        <Button color="inherit" href="/Register">Register</Button>
-                        :
-                        <Button color="inherit" href="/login">Login</Button>
-                    }
+                        {(loginPage) ?
+                            <Button color="inherit" href="/Register">Register</Button>
+                            :
+                            <Button color="inherit" href="/login">Login</Button>
+                        }
                     </>}
             </Toolbar>
         </AppBar>

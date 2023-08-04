@@ -6,6 +6,7 @@ import NavBar from './../components/NavBar.js';
 import {  useState } from "react";
 import {  useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import BASE_URL from '../ApiConfig.js';
 
 const Home = () => {
     const [username, setUsername] = useState('');
@@ -20,7 +21,7 @@ const Home = () => {
                 "username": username,
                 "password": password
             };
-            fetch("http://localhost:5059/User/register", {
+            fetch(`${BASE_URL}/User/register`, {
                 method: 'POST',
                 headers: { 'content-type': 'application/json' },
                 body: JSON.stringify(inputobj)

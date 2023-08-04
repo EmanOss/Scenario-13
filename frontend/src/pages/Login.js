@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import NavBar from './../components/NavBar.js';
+import BASE_URL from '../ApiConfig.js';
 
 const Login = () => {
 
@@ -28,7 +29,7 @@ const Login = () => {
                 "username": username,
                 "password": password
             };
-            fetch("http://localhost:5059/User/Authenticate", {
+            fetch(`${BASE_URL}/User/Authenticate`, {
                 method: 'POST',
                 headers: { 'content-type': 'application/json' },
                 body: JSON.stringify(inputobj)
