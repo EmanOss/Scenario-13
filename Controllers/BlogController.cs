@@ -14,6 +14,7 @@ public class BlogController : ControllerBase
     {
         _DBContext = dBContext;
     }
+    /*gets the currently logged in user*/
     private User? GetCurrentUser()
     {
         var currentUser = HttpContext.User;
@@ -24,16 +25,18 @@ public class BlogController : ControllerBase
         return null;
     }
 
-    [HttpGet("GetAll")]
+    [HttpGet("GetAll")] /*get all blogs*/
     public IActionResult GetAll()
     {
         var blogs = _DBContext.Blogs.ToList();
         return Ok(blogs);
     }
-    [HttpGet("GetById/{id}")]
+    [HttpGet("GetById/{id}")] /*get a blog by its ID*/
     public IActionResult GetById(int id)
     {
         var blog = _DBContext.Blogs.FirstOrDefault(b => b.Id == id);
+        if (blog == null)
+            return NotFound(new { message = "blog not found" });
         return Ok(blog);
     }
     [HttpPost("create")]
@@ -53,7 +56,7 @@ public class BlogController : ControllerBase
             currUser?.Blogs.Add(blog);
             _DBContext.Blogs.Add(blog);
             _DBContext.SaveChanges();
-            return Ok(new {blogId = blog.Id});
+            return Ok(new { blogId = blog.Id });
         }
         return Ok(false);
 
@@ -65,6 +68,7 @@ public class BlogController : ControllerBase
         if (currUser != null)
         {
             var blog = _DBContext.Blogs.FirstOrDefault(b => b.Id == id);
+            //check that the currently logged in user is the original author of the blog
             if (blog != null && blog.AuthorUserName == currUser.UserName)
             {
                 //user can only edit title or blog text
@@ -84,18 +88,23 @@ public class BlogController : ControllerBase
         User? currUser = GetCurrentUser();
         if (currUser != null)
         {
+            //check that the currently logged in user is the original author of the blog
             var blog = _DBContext.Blogs.FirstOrDefault(b => b.Id == id);
-            if (blog != null && blog.AuthorUserName == currUser.UserName)
-            {
-                _DBContext.Remove(blog);
-                _DBContext.SaveChanges();
-                return Ok(true);
-            }
+            if (blog != null)
+                if (blog.AuthorUserName == currUser.UserName)
+                {
+                    _DBContext.Remove(blog);
+                    _DBContext.SaveChanges();
+                    return Ok(true);
+                }
+                else
+                {
+                    return Unauthorized();
+                }
         }
-        //todo - 404 not found
-        return Ok(false);
+        return NotFound(new { message = "blog not found" });
     }
-    [HttpGet("GetStats/{id}")]
+    [HttpGet("GetStats/{id}")] /*get statistic by blog ID*/
     public IActionResult GetStats(int id)
     {
         var blog = _DBContext.Blogs.FirstOrDefault(b => b.Id == id);
@@ -109,6 +118,6 @@ public class BlogController : ControllerBase
                     Comments = (List<Comment>)blog.Comments
                 });
         }
-        return Ok(false);
+        return NotFound(new { message = "blog not found" });
     }
 }

@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Scenario_13.Models;
 namespace Scenario_13.Controllers;
 
@@ -26,7 +25,7 @@ public class CommentController : ControllerBase
         return null;
     }
 
-    [HttpGet("GetByBlogId/{blogId}")]
+    [HttpGet("GetByBlogId/{blogId}")] /*get comments of a blog by it's ID*/
     public IActionResult GetById(int blogId)
     {
         // var blog = _DBContext.Blogs.Include(b => b.Comments).FirstOrDefault(b => b.Id == blogId);
@@ -37,13 +36,15 @@ public class CommentController : ControllerBase
         List<Comment> comments = (List<Comment>)blog.Comments;
         return Ok(comments);
     }
-    [HttpPost("create/{blogId}")]
+    [HttpPost("create/{blogId}")] /*add comment to a blog by it's ID*/
     public IActionResult Create(int blogId, [FromBody] CommentDto commentDto)
     {
         User? currUser = GetCurrentUser();
         if (currUser != null)
         {
             var blog = _DBContext.Blogs.FirstOrDefault(b => b.Id == blogId);
+            if (blog == null)
+                return NotFound(new { message = "blog not found" });
             var comment = new Comment
             {
                 BlogId = blogId,
@@ -70,7 +71,7 @@ public class CommentController : ControllerBase
             var comment = _DBContext.Comments.FirstOrDefault(b => b.Id == id);
             if (comment != null && comment.UserName == currUser.UserName)
             {
-                comment.Text=commentDto.Text;
+                comment.Text = commentDto.Text;
                 _DBContext.SaveChanges();
                 return Ok(true);
             }
@@ -86,14 +87,17 @@ public class CommentController : ControllerBase
         if (currUser != null)
         {
             var comment = _DBContext.Comments.FirstOrDefault(b => b.Id == id);
-            if (comment != null && comment.UserName == currUser.UserName)
-            {
-                _DBContext.Remove(comment);
-                _DBContext.SaveChanges();
-                return Ok(true);
-            }
+            if (comment != null)
+                if (comment.UserName == currUser.UserName)
+                {
+                    _DBContext.Remove(comment);
+                    _DBContext.SaveChanges();
+                    return Ok(true);
+                }
+                else
+                    return Unauthorized(new { message = "Cannot delete another user's comment" });
+            else return NotFound(new { message = "Comment not found" });
         }
-        //todo - 404 not found
         return Ok(false);
     }
 }

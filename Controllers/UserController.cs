@@ -1,4 +1,3 @@
-using System.Numerics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -7,7 +6,6 @@ using System.IdentityModel.Tokens.Jwt;
 using Scenario_13.Models;
 using System.Text;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Scenario_13.Controllers;
 
@@ -24,11 +22,17 @@ public class UserController : ControllerBase
         _jwtSettings = options.Value;
     }
     [HttpPost("register")]
-    public ActionResult<User> Register(UserDto userDto)
+    public async Task<ActionResult<User>> RegisterAsync(UserDto userDto)
     {
+        //check if user already registered
+        var userOld = await _DBContext.Users.FirstOrDefaultAsync(item => item.UserName == userDto.UserName);
+        if (userOld != null)
+        {
+            return Conflict(new {message = "Username already exists"});
+        }
+        //create new user
         string passwordHash
             = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
-
         var user = new User
         {
             UserName = userDto.UserName,
@@ -42,10 +46,10 @@ public class UserController : ControllerBase
     [HttpPost("Authenticate")]
     public async Task<IActionResult> Authenticate([FromBody] UserDto userDto)
     {
-        Console.WriteLine("username at auth: "+userDto.UserName);
+        Console.WriteLine("username at auth: " + userDto.UserName);
         var user = await _DBContext.Users.FirstOrDefaultAsync(item => item.UserName == userDto.UserName);
         if (user == null || !BCrypt.Net.BCrypt.Verify(userDto.Password, user.PasswordHash))
-            return Unauthorized();
+            return Unauthorized(new {message = "Invalid Username or Password"});
 
         //generate token
         var tokenhandler = new JwtSecurityTokenHandler();
@@ -61,37 +65,6 @@ public class UserController : ControllerBase
         };
         var token = tokenhandler.CreateToken(tokendesc);
         string finaltoken = tokenhandler.WriteToken(token);
-        // var res = ;
-        // var response = new TokenResponse() { jwttoken = finaltoken, refreshtoken = await refereshTokenGenerator.GenerateToken(userCred.username) };
-
-        return Ok(new {token = finaltoken});
+        return Ok(new { token = finaltoken });
     }
-    // [Authorize]
-    // [HttpPost("update/{oldUserName}")]
-    // public IActionResult Update(string oldUserName, [FromBody] UserDto userDto)
-    // {
-    //     var user = _DBContext.Users.FirstOrDefault(item => item.UserName.Equals(oldUserName));
-    //     if (user != null)
-    //     {
-    //         user.UserName = userDto.UserName;
-    //         user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
-    //         _DBContext.SaveChanges();
-    //         return Ok(true);
-    //     }
-    //     return Ok(false);
-
-    // }
-    // [Authorize]
-    // [HttpDelete("remove/{userName}")]
-    // public IActionResult Remove(string userName)
-    // {
-    //     var user = _DBContext.Users.FirstOrDefault(item => item.UserName.Equals(userName));
-    //     if (user != null)
-    //     {
-    //         _DBContext.Remove(user);
-    //         _DBContext.SaveChanges();
-    //         return Ok(true);
-    //     }
-    //     return Ok(false);
-    // }
 }
