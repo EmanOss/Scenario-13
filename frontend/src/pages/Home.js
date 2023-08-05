@@ -7,6 +7,16 @@ import BoldItem from './../components/BoldItem.js';
 import NavBar from './../components/NavBar.js';
 import BASE_URL from '../ApiConfig.js';
 import { styled } from '@mui/material/styles';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import { CardActionArea } from '@mui/material';
+import CardActions from '@mui/material/CardActions';
+import Button from '@mui/material/Button';
+
+const backgroundImageUrl = './../images/letter.jpg';
+//Photo by <a href="https://unsplash.com/@alvaroserrano?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Álvaro Serrano</a> on <a href="https://unsplash.com/photos/hjwKMkehBco?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
 
 
 
@@ -57,7 +67,30 @@ const Home = () => {
           <Grid container xs={12} md={12} spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} direction="row" justifyContent="center" alignItems="center" >
             {blogs.map((blog) => (
               <Grid item xs={2} sm={4} md={4} >
-                <BoldItem key={blog.id} onClick={() => getBlog(blog.id)}>{blog.title}</BoldItem>
+
+                <Card sx={{ maxWidth: 345 }}>
+                  {/* <div style={{ position: 'relative', zIndex: 1 }}> */}
+                  <CardActionArea key={blog.id} onClick={() => getBlog(blog.id)}>
+
+                    <CardContent sx={{ height: 150 }}>
+                      <Typography gutterBottom variant="h6" component="div">
+                        {blog.title}
+                      </Typography>
+                      <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                        Written By: {blog.authorUserName}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {blog.text.split(' ').slice(0, 10).join(' ')}...
+                      </Typography>
+                    </CardContent>
+                    <CardActions sx={{ justifyContent: 'flex-end' }}>
+                      <Button size="small" display="flex" justifyContent="flex-end">Continue reading</Button>
+                    </CardActions>
+                  </CardActionArea>
+                  {/* </div>
+                  <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.3)', zIndex: 0 }}></div> */}
+                </Card>
+
               </Grid>
             ))}
 
