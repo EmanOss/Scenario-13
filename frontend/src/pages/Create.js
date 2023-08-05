@@ -35,12 +35,12 @@ function Create() {
             })
                 .then((resp) => {
                     if (Object.keys(resp).length === 0) {
-                        toast.error('Creation failed, invalid credentials');
+                        toast.error('Creation failed');
                     } else {
                         usenavigate(`/blog/${resp.blogId}`);
                     }
                 }).catch((err) => {
-                    toast.error('Creation Failed due to :' + err.message);
+                    toast.error('Creation Failed' );
                 });
         }
     };

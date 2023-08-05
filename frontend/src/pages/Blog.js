@@ -73,7 +73,7 @@ function Blog() {
                 return res.json();
             })
                 .catch((err) => {
-                    toast.error('Comment Failed due to :' + err.message);
+                    toast.error('Comment Failed');
                 });
         }
     }
@@ -109,6 +109,7 @@ function Blog() {
                                     id="outlined"
                                     label="Add Comment"
                                     value={newComment}
+                                    sx={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
                                     onChange={e => setNewComment(e.target.value)}
                                 />
                                 <Button variant="contained" onClick={addComment}>Add Comment</Button>

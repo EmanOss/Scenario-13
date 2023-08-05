@@ -36,8 +36,14 @@ const Login = () => {
                 method: 'POST',
                 headers: { 'content-type': 'application/json' },
                 body: JSON.stringify(inputobj)
-            }).then((res) => {
-                return res.json();
+            }).then(async (res) => {
+                if (res.status === 401) {
+                    // Unauthorized, handle error message
+                    const resp = await res.json();
+                    throw new Error(resp.message || 'Login failed, invalid credentials');
+                } else {
+                    return res.json();
+                }
             })
                 .then((resp) => {
                     if (!resp.token.length > 0) {
@@ -49,7 +55,7 @@ const Login = () => {
                         usenavigate('/blog')
                     }
                 }).catch((err) => {
-                    toast.error('Login Failed due to :' + err.message);
+                    toast.error('Login Failed: ' + err.message);
                 });
         }
     }
@@ -73,17 +79,17 @@ const Login = () => {
             </Grid>
             <Grid container xs={10} md={10} direction="column" spacing={2} justifyContent="center" alignItems="center" sx={{ padding: 5 }}>
                 {/* IF I WANT THE TEXT FIELDS TO THE LEFT ADD THIS  sx={{ width: '100%', display: 'flex', justifyContent: 'flex-start' }}*/}
-                
+
                 <Grid item xs={12} md={12}>
                     <TextField
                         required
                         id="outlined"
                         label="UserName"
-                        value={username}
+                        sx={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
                         onChange={e => setUsername(e.target.value)}
                     />
                 </Grid>
-                
+
                 <Grid item xs={12} md={12} >
                     <TextField
                         required
@@ -91,6 +97,7 @@ const Login = () => {
                         label="Password"
                         type="password"
                         autoComplete="current-password"
+                        sx={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
                         onChange={e => setPassword(e.target.value)}
                     />
                 </Grid>
