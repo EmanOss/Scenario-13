@@ -77,18 +77,25 @@ const Home = () => {
                       <Card sx={{ maxWidth: 345 }}>
                         {/* <div style={{ position: 'relative', zIndex: 1 }}> */}
                         <CardActionArea key={blog.id} onClick={() => getBlog(blog.id)}>
-
-                          <CardContent sx={{ height: 150 }}>
+                          <CardContent sx={{ maxHeight: 200, overflow: 'hidden' }}>
                             <Typography gutterBottom variant="h6" component="div">
                               {blog.title}
                             </Typography>
                             <Typography sx={{ mb: 1.5 }} color="text.secondary">
                               Written By: {blog.authorUserName}
                             </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                              {blog.text.split(' ').slice(0, 10).join(' ')}...
+                            <Typography
+                              variant="body2"
+                              color="text.secondary"
+                              sx={{
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                              }}
+                            >
+                              {blog.text}
                             </Typography>
                           </CardContent>
+
                           <CardActions sx={{ justifyContent: 'flex-end' }}>
                             <Button size="small" display="flex" justifyContent="flex-end">Continue reading</Button>
                           </CardActions>
