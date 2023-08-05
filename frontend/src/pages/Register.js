@@ -94,7 +94,6 @@ const Home = () => {
                     </Grid>
 
                 </Grid>
-            {/* </Paper> */}
         </>
     );
 }

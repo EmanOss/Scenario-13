@@ -11,7 +11,10 @@ import { toast } from "react-toastify";
 import NavBar from './../components/NavBar.js';
 import BASE_URL from '../ApiConfig.js';
 import BoldItem from './../components/BoldItem.js';
-
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import CardActions from '@mui/material/CardActions';
 
 function Blog() {
     const { blogId } = useParams();
@@ -49,7 +52,7 @@ function Blog() {
         };
         fetchData();
     }, [refresh]);
-    
+
     if (isLoading) {
         return <div>Loading...</div>;
     }
@@ -81,39 +84,59 @@ function Blog() {
     return (
         <>
             <Grid item xs={12} md={12} >
-                <NavBar title={blog.title} blogPage={true} />
+                <NavBar blogPage={true} />
             </Grid>
             {(localStorage.getItem('token')) ?
                 <Grid item xs={10} md={10} direction="row" spacing={2} justifyContent="center" alignItems="center" sx={{ padding: 5 }}>
                     <Grid container xs={12} md={12} spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} direction="row" justifyContent="center" alignItems="center" >
-                        <Grid item xs={2} md={12} >
-                            <BoldItem elevation={4} fontWeight="bold">Written By: {blog.authorUserName}, On {date}</BoldItem>
-                        </Grid>
-                        <Grid item xs={2} md={12} >
-                            <Item elevation={4}>{blog.text}</Item>
-                        </Grid>
-                        <Grid item xs={2} md={12} >
-                            <BoldItem elevation={4}>Comments</BoldItem>
+                        <Grid item xs={12} md={12} >
+                            <Card>
+                                <CardContent>
+                                    <Typography gutterBottom variant="h5" component="div">
+                                        {blog.title}
+                                    </Typography>
+                                    <Typography fontWeight="bold" sx={{ mb: 1.5 }} color="text.secondary">
+                                        Written By: {blog.authorUserName}
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        {blog.text}
+                                    </Typography>
+                                </CardContent>
+                            </Card>
                         </Grid>
                         {blog.comments.map((comment) => (
                             <Grid item xs={2} sm={4} md={4} >
-                                <Item key={comment.id} >
-                                    <BoldItem>{comment.text}</BoldItem>
-                                    <Item>By User: {comment.userName}</Item>
-                                </Item>
+                                <Card key={comment.id} sx={{ height: '150px', display: 'flex', flexDirection: 'column' }}>
+                                    <CardContent >
+                                        <Typography gutterBottom fontWeight="bold" variant="body2" sx={{ wordWrap: 'break-word' }}>
+                                            {comment.text}
+                                        </Typography>
+                                    </CardContent>
+                                    <CardContent sx={{ marginTop: 'auto' }}> 
+                                        <Typography variant="body2" color="text.secondary">
+                                            By User: {comment.userName}
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
                             </Grid>
                         ))}
+
                         <Grid item xs={2} sm={4} md={4} >
-                            <Item>
-                                <TextField
-                                    id="outlined"
-                                    label="Add Comment"
-                                    value={newComment}
-                                    sx={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
-                                    onChange={e => setNewComment(e.target.value)}
-                                />
-                                <Button variant="contained" onClick={addComment}>Add Comment</Button>
-                            </Item>
+                            <Card sx={{ height: '150px', display: 'flex', flexDirection: 'column' }}>
+                                <CardContent >
+                                    <TextField
+                                        id="standard-basic"
+                                        variant="standard"
+                                        label="Comment"
+                                        value={newComment}
+                                        sx={{ width: '100%', backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
+                                        onChange={e => setNewComment(e.target.value)}
+                                    />
+                                </CardContent>
+                                <CardActions sx={{ justifyContent: 'flex-end' }}>
+                                    <Button size="small" display="flex" justifyContent="flex-end" onClick={addComment}>Add Comment</Button>
+                                </CardActions>
+                            </Card>
                         </Grid>
                     </Grid>
                 </Grid>
