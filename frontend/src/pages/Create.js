@@ -2,8 +2,7 @@ import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import Item from './../components/Item.js';
-import NavBar from './../components/NavBar.js';
+import Item from '../components/Item.js';
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -53,9 +52,6 @@ function Create() {
                 <div className="content" style={{ display: 'flex', position: 'relative', zIndex: 1 }}>
                     <MyDrawer />
                     <div style={{ flex: 1 }}>
-                    {/* <Grid item xs={12} md={12} >
-                <NavBar title="Create a Blog!" createPage={true} />
-            </Grid> */}
                     {(localStorage.getItem('token')) ?
                         <Grid item xs={10} md={10} direction="row" spacing={2} justifyContent="center" alignItems="center" sx={{ padding: 5 }}>
 

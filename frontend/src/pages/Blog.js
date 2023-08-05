@@ -1,58 +1,59 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Item from './../components/Item.js'
+import Item from '../components/Item.js'
 import TextField from '@mui/material/TextField';
 import { toast } from "react-toastify";
-import NavBar from './../components/NavBar.js';
 import BASE_URL from '../ApiConfig.js';
-import BoldItem from './../components/BoldItem.js';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardActions from '@mui/material/CardActions';
 import MyDrawer from '../components/MyDrawer.js';
 
-
-
 function Blog() {
 
     const { blogId } = useParams();
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
     const [blog, setBlog] = useState(null);
     const [newComment, setNewComment] = useState('');
     const [refresh, setRefresh] = useState(false);
     const [date, setDate] = useState("");
 
 
-    const usenavigate = useNavigate();
-
     useEffect(() => {
         //getting blog
         const fetchData = async () => {
-            try {
-                const response = await fetch(`${BASE_URL}/Blog/GetById/${blogId}`, {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                    },
-                });
+
+            fetch(`${BASE_URL}/Blog/GetById/${blogId}`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+            }).then(async (response) => {
                 if (!response.ok) {
-                    throw new Error('Request failed!');
+                    throw new Error(response.message ||'Request failed!');
                 }
-                const jsonData = await response.json();
-                setBlog(jsonData);
-                setDate(jsonData.creationDate.split('T')[0]);
-                console.log(jsonData.creationDate);
-            } catch (error) {
-                setError(error.message);
-            } finally {
-                setIsLoading(false);
-            }
+                else {
+                    const jsonData = await response.json();
+                    setBlog(jsonData);
+                    setDate(jsonData.creationDate.split('T')[0]);
+                    console.log(jsonData.creationDate);
+
+                    return response.json();
+                }
+
+            })
+                .catch((err) => {
+                    console.log('Failed: ' + err.message);
+                })
+                .finally(() => {
+                    setIsLoading(false);
+                });
+
+
         };
         fetchData();
     }, [refresh]);
@@ -89,11 +90,8 @@ function Blog() {
             <div className="background-container">
                 <div className="image-overlay"></div>
                 <div className="content" style={{ display: 'flex', position: 'relative', zIndex: 1 }}>
-                    <MyDrawer/>
+                    <MyDrawer />
                     <div style={{ flex: 1 }}>
-                        {/* <Grid item xs={12} md={12} >
-                <NavBar blogPage={true} />
-            </Grid> */}
                         {(localStorage.getItem('token')) ?
                             <Grid item xs={10} md={10} direction="row" spacing={2} justifyContent="center" alignItems="center" sx={{ padding: 5 }}>
                                 <Grid container xs={12} md={12} spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} direction="row" justifyContent="center" alignItems="center" >

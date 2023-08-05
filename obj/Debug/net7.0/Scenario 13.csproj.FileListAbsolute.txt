@@ -51,6 +51,13 @@
 /home/lenovo/Scenario 13/obj/Debug/net7.0/ref/Scenario 13.dll
 /home/lenovo/Scenario 13/bin/Debug/net7.0/Castle.Core.dll
 /home/lenovo/Scenario 13/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Proxies.dll
-/home/lenovo/Scenario 13/bin/Debug/net7.0/frontend/package-lock.json
 /home/lenovo/Scenario 13/bin/Debug/net7.0/frontend/package.json
 /home/lenovo/Scenario 13/bin/Debug/net7.0/frontend/public/manifest.json
+/home/lenovo/Scenario 13/bin/Debug/net7.0/backend/Controllers/bin/Debug/net7.0/appsettings.Development.json
+/home/lenovo/Scenario 13/bin/Debug/net7.0/backend/Controllers/bin/Debug/net7.0/appsettings.json
+/home/lenovo/Scenario 13/bin/Debug/net7.0/backend/Controllers/bin/Debug/net7.0/frontend/package-lock.json
+/home/lenovo/Scenario 13/bin/Debug/net7.0/backend/Controllers/bin/Debug/net7.0/frontend/package.json
+/home/lenovo/Scenario 13/bin/Debug/net7.0/backend/Controllers/bin/Debug/net7.0/frontend/public/manifest.json
+/home/lenovo/Scenario 13/bin/Debug/net7.0/backend/Controllers/bin/Debug/net7.0/Scenario 13.deps.json
+/home/lenovo/Scenario 13/bin/Debug/net7.0/backend/Controllers/bin/Debug/net7.0/Scenario 13.runtimeconfig.json
+/home/lenovo/Scenario 13/bin/Debug/net7.0/frontend/package-lock.json

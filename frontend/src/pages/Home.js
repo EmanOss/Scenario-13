@@ -2,9 +2,9 @@ import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Item from './../components/Item.js';
-import BoldItem from './../components/BoldItem.js';
-import NavBar from './../components/NavBar.js';
+import Item from '../components/Item.js';
+import BoldItem from '../components/BoldItem.js';
+import NavBar from '../components/NavBar.js';
 import BASE_URL from '../ApiConfig.js';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
@@ -65,9 +65,6 @@ const Home = () => {
         <div className="content" style={{ display: 'flex', position: 'relative', zIndex: 1 }}>
           <MyDrawer />
           <div style={{ flex: 1 }}>
-            {/* <Grid item xs={12} md={12} >
-        <NavBar title="All Blogs" createPage={false} />
-      </Grid> */}
             {(localStorage.getItem('token')) ?
               <Grid item xs={10} md={10} direction="row" spacing={2} justifyContent="center" alignItems="center" sx={{ padding: 5 }}>
                 <Grid container xs={12} md={12} spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} direction="row" justifyContent="center" alignItems="center" >
@@ -75,7 +72,6 @@ const Home = () => {
                     <Grid item xs={2} sm={4} md={4} >
 
                       <Card sx={{ maxWidth: 345 }}>
-                        {/* <div style={{ position: 'relative', zIndex: 1 }}> */}
                         <CardActionArea key={blog.id} onClick={() => getBlog(blog.id)}>
                           <CardContent sx={{ maxHeight: 200, overflow: 'hidden' }}>
                             <Typography gutterBottom variant="h6" component="div">
@@ -100,10 +96,7 @@ const Home = () => {
                             <Button size="small" display="flex" justifyContent="flex-end">Continue reading</Button>
                           </CardActions>
                         </CardActionArea>
-                        {/* </div>
-                  <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.3)', zIndex: 0 }}></div> */}
                       </Card>
-
                     </Grid>
                   ))}
 
