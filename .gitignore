@@ -6,3 +6,5 @@ React/my-app/package-lock.json
 React/my-app/node_modules
 frontend/node_modules
 frontend/package-lock.json
+backend/Controllers/bin
+backend/Controllers/frontend
