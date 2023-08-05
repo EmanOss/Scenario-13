@@ -98,6 +98,9 @@ function Blog() {
                                     <Typography fontWeight="bold" sx={{ mb: 1.5 }} color="text.secondary">
                                         Written By: {blog.authorUserName}
                                     </Typography>
+                                    <Typography fontWeight="bold" sx={{ mb: 1.5 }} color="text.secondary">
+                                        On: {new Date(date).toLocaleDateString()} {new Date(date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                    </Typography>
                                     <Typography variant="body2" color="text.secondary">
                                         {blog.text}
                                     </Typography>
@@ -114,7 +117,7 @@ function Blog() {
                                     </CardContent>
                                     <CardContent sx={{ marginTop: 'auto' }}> 
                                         <Typography variant="body2" color="text.secondary">
-                                            By User: {comment.userName}
+                                            By User: {comment.userName}, {new Date(comment.date).toLocaleDateString()} {new Date(comment.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                         </Typography>
                                     </CardContent>
                                 </Card>
