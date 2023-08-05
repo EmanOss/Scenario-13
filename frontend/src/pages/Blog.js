@@ -15,8 +15,12 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardActions from '@mui/material/CardActions';
+import MyDrawer from '../components/MyDrawer.js';
+
+
 
 function Blog() {
+
     const { blogId } = useParams();
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -80,77 +84,84 @@ function Blog() {
                 });
         }
     }
-
     return (
         <>
-            <Grid item xs={12} md={12} >
+            <div className="background-container">
+                <div className="image-overlay"></div>
+                <div className="content" style={{ display: 'flex', position: 'relative', zIndex: 1 }}>
+                    <MyDrawer/>
+                    <div style={{ flex: 1 }}>
+                        {/* <Grid item xs={12} md={12} >
                 <NavBar blogPage={true} />
-            </Grid>
-            {(localStorage.getItem('token')) ?
-                <Grid item xs={10} md={10} direction="row" spacing={2} justifyContent="center" alignItems="center" sx={{ padding: 5 }}>
-                    <Grid container xs={12} md={12} spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} direction="row" justifyContent="center" alignItems="center" >
-                        <Grid item xs={12} md={12} >
-                            <Card>
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="div">
-                                        {blog.title}
-                                    </Typography>
-                                    <Typography fontWeight="bold" sx={{ mb: 1.5 }} color="text.secondary">
-                                        Written By: {blog.authorUserName}
-                                    </Typography>
-                                    <Typography fontWeight="bold" sx={{ mb: 1.5 }} color="text.secondary">
-                                        On: {new Date(date).toLocaleDateString()} {new Date(date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        {blog.text}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                        {blog.comments.map((comment) => (
-                            <Grid item xs={2} sm={4} md={4} >
-                                <Card key={comment.id} sx={{ height: '150px', display: 'flex', flexDirection: 'column' }}>
-                                    <CardContent >
-                                        <Typography gutterBottom fontWeight="bold" variant="body2" sx={{ wordWrap: 'break-word' }}>
-                                            {comment.text}
-                                        </Typography>
-                                    </CardContent>
-                                    <CardContent sx={{ marginTop: 'auto' }}> 
-                                        <Typography variant="body2" color="text.secondary">
-                                            By User: {comment.userName}, {new Date(comment.date).toLocaleDateString()} {new Date(comment.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
+            </Grid> */}
+                        {(localStorage.getItem('token')) ?
+                            <Grid item xs={10} md={10} direction="row" spacing={2} justifyContent="center" alignItems="center" sx={{ padding: 5 }}>
+                                <Grid container xs={12} md={12} spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} direction="row" justifyContent="center" alignItems="center" >
+                                    <Grid item xs={12} md={12} >
+                                        <Card>
+                                            <CardContent>
+                                                <Typography gutterBottom variant="h5" component="div">
+                                                    {blog.title}
+                                                </Typography>
+                                                <Typography fontWeight="bold" sx={{ mb: 1.5 }} color="text.secondary">
+                                                    Written By: {blog.authorUserName}
+                                                </Typography>
+                                                <Typography fontWeight="bold" sx={{ mb: 1.5 }} color="text.secondary">
+                                                    On: {new Date(date).toLocaleDateString()}
+                                                </Typography>
+                                                <Typography variant="body2" color="text.secondary">
+                                                    {blog.text}
+                                                </Typography>
+                                            </CardContent>
+                                        </Card>
+                                    </Grid>
+                                    {blog.comments.map((comment) => (
+                                        <Grid item xs={2} sm={4} md={4} >
+                                            <Card key={comment.id} sx={{ height: '150px', display: 'flex', flexDirection: 'column' }}>
+                                                <CardContent >
+                                                    <Typography gutterBottom fontWeight="bold" variant="body2" sx={{ wordWrap: 'break-word' }}>
+                                                        {comment.text}
+                                                    </Typography>
+                                                </CardContent>
+                                                <CardContent sx={{ marginTop: 'auto' }}>
+                                                    <Typography variant="body2" color="text.secondary">
+                                                        By User: {comment.userName}, {new Date(comment.date).toLocaleDateString()}
+                                                    </Typography>
+                                                </CardContent>
+                                            </Card>
+                                        </Grid>
+                                    ))}
+
+                                    <Grid item xs={2} sm={4} md={4} >
+                                        <Card sx={{ height: '150px', display: 'flex', flexDirection: 'column' }}>
+                                            <CardContent >
+                                                <TextField
+                                                    id="standard-basic"
+                                                    variant="standard"
+                                                    label="Comment"
+                                                    value={newComment}
+                                                    sx={{ width: '100%', backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
+                                                    onChange={e => setNewComment(e.target.value)}
+                                                />
+                                            </CardContent>
+                                            <CardActions sx={{ justifyContent: 'flex-end' }}>
+                                                <Button size="small" display="flex" justifyContent="flex-end" onClick={addComment}>Add Comment</Button>
+                                            </CardActions>
+                                        </Card>
+                                    </Grid>
+                                </Grid>
                             </Grid>
-                        ))}
+                            :
+                            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
 
-                        <Grid item xs={2} sm={4} md={4} >
-                            <Card sx={{ height: '150px', display: 'flex', flexDirection: 'column' }}>
-                                <CardContent >
-                                    <TextField
-                                        id="standard-basic"
-                                        variant="standard"
-                                        label="Comment"
-                                        value={newComment}
-                                        sx={{ width: '100%', backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
-                                        onChange={e => setNewComment(e.target.value)}
-                                    />
-                                </CardContent>
-                                <CardActions sx={{ justifyContent: 'flex-end' }}>
-                                    <Button size="small" display="flex" justifyContent="flex-end" onClick={addComment}>Add Comment</Button>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                    </Grid>
-                </Grid>
-                :
-                <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-
-                    <Grid item xs={2} sm={4} md={4} >
-                        <Item>Please Log in first!</Item>
-                    </Grid>
-                </Grid>
-            }
+                                <Grid item xs={2} sm={4} md={4} >
+                                    <Item>Please Log in first!</Item>
+                                </Grid>
+                            </Grid>
+                        }
+                    </div>
+                </div>
+            </div>
         </>
     );
 }

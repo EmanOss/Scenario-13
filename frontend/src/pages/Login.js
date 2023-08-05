@@ -9,6 +9,7 @@ import NavBar from './../components/NavBar.js';
 import Item from './../components/Item.js';
 import BASE_URL from '../ApiConfig.js';
 import Paper from '@mui/material/Paper';
+import MyDrawer from '../components/MyDrawer.js';
 
 
 const Login = () => {
@@ -74,37 +75,45 @@ const Login = () => {
 
     return (
         <>
-            <Grid item xs={12} md={12} >
+            <div className="background-container">
+                <div className="image-overlay"></div>
+                <div className="content" style={{ display: 'flex', position: 'relative', zIndex: 1 }}>
+                    <MyDrawer />
+                    <div style={{ flex: 1 }}>
+                        {/* <Grid item xs={12} md={12} >
                 <NavBar title="Login" loginPage={true} />
-            </Grid>
-            <Grid container xs={10} md={10} direction="column" spacing={2} justifyContent="center" alignItems="center" sx={{ padding: 5 }}>
-                {/* IF I WANT THE TEXT FIELDS TO THE LEFT ADD THIS  sx={{ width: '100%', display: 'flex', justifyContent: 'flex-start' }}*/}
+            </Grid> */}
+                        <Grid container xs={10} md={10} direction="column" spacing={2} justifyContent="center" alignItems="center" sx={{ padding: 15 }}>
+                            {/* IF I WANT THE TEXT FIELDS TO THE LEFT ADD THIS  sx={{ width: '100%', display: 'flex', justifyContent: 'flex-start' }}*/}
 
-                <Grid item xs={12} md={12}>
-                    <TextField
-                        required
-                        id="outlined"
-                        label="UserName"
-                        sx={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
-                        onChange={e => setUsername(e.target.value)}
-                    />
-                </Grid>
+                            <Grid item xs={12} md={12}>
+                                <TextField
+                                    required
+                                    id="outlined"
+                                    label="UserName"
+                                    sx={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
+                                    onChange={e => setUsername(e.target.value)}
+                                />
+                            </Grid>
 
-                <Grid item xs={12} md={12} >
-                    <TextField
-                        required
-                        id="outlined-password-input"
-                        label="Password"
-                        type="password"
-                        autoComplete="current-password"
-                        sx={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
-                        onChange={e => setPassword(e.target.value)}
-                    />
-                </Grid>
-                <Grid item xs={12} md={12} >
-                    <Button variant="contained" onClick={login}>Log in</Button>
-                </Grid>
-            </Grid>
+                            <Grid item xs={12} md={12} >
+                                <TextField
+                                    required
+                                    id="outlined-password-input"
+                                    label="Password"
+                                    type="password"
+                                    autoComplete="current-password"
+                                    sx={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
+                                    onChange={e => setPassword(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12} md={12} >
+                                <Button variant="contained" onClick={login}>Log in</Button>
+                            </Grid>
+                        </Grid>
+                    </div>
+                </div>
+            </div>
 
         </>
     );

@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import BASE_URL from '../ApiConfig.js';
+import MyDrawer from '../components/MyDrawer.js';
 
 function Create() {
     const [title, setTitle] = useState('');
@@ -40,55 +41,63 @@ function Create() {
                         usenavigate(`/blog/${resp.blogId}`);
                     }
                 }).catch((err) => {
-                    toast.error('Creation Failed' );
+                    toast.error('Creation Failed');
                 });
         }
     };
 
     return (
         <>
-            <Grid item xs={12} md={12} >
+            <div className="background-container">
+                <div className="image-overlay"></div>
+                <div className="content" style={{ display: 'flex', position: 'relative', zIndex: 1 }}>
+                    <MyDrawer />
+                    <div style={{ flex: 1 }}>
+                    {/* <Grid item xs={12} md={12} >
                 <NavBar title="Create a Blog!" createPage={true} />
-            </Grid>
-            {(localStorage.getItem('token')) ?
-                <Grid item xs={10} md={10} direction="row" spacing={2} justifyContent="center" alignItems="center" sx={{ padding: 5 }}>
+            </Grid> */}
+                    {(localStorage.getItem('token')) ?
+                        <Grid item xs={10} md={10} direction="row" spacing={2} justifyContent="center" alignItems="center" sx={{ padding: 5 }}>
 
-                    <Grid container xs={10} md={10} spacing={2} direction="row" justifyContent="center" alignItems="center">
-                        <Grid item xs={12} md={12}>
-                            <TextField
-                                required
-                                id="outlined"
-                                label="Title"
-                                value={title}
-                                sx={{ width: '100%', backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
-                                onChange={e => setTitle(e.target.value)}
-                            />
+                            <Grid container xs={10} md={10} spacing={2} direction="row" justifyContent="center" alignItems="center">
+                                <Grid item xs={12} md={12}>
+                                    <TextField
+                                        required
+                                        id="outlined"
+                                        label="Title"
+                                        value={title}
+                                        sx={{ width: '100%', backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
+                                        onChange={e => setTitle(e.target.value)}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <TextField
+                                        required
+                                        multiline
+                                        rows={15}
+                                        id="outlined-textarea"
+                                        value={text}
+                                        label="Text"
+                                        sx={{ width: '100%', backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
+                                        onChange={e => setText(e.target.value)}
+                                    />
+                                </Grid>
+                                <Grid item xs={6} md={12} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                    <Button variant="contained" onClick={createBlog}>Create</Button>
+                                </Grid>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12} md={12}>
-                            <TextField
-                                required
-                                multiline
-                                rows={15}
-                                id="outlined-textarea"
-                                value={text}
-                                label="Text"
-                                sx={{ width: '100%', backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
-                                onChange={e => setText(e.target.value)}
-                            />
-                        </Grid>
-                        <Grid item xs={6} md={12} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                            <Button variant="contained" onClick={createBlog}>Create</Button>
-                        </Grid>
-                    </Grid>
-                </Grid>
-                :
-                <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+                        :
+                        <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
 
-                    <Grid item xs={2} sm={4} md={4} >
-                        <Item>Please Log in first!</Item>
-                    </Grid>
-                </Grid>
-            }
+                            <Grid item xs={2} sm={4} md={4} >
+                                <Item>Please Log in first!</Item>
+                            </Grid>
+                        </Grid>
+                    }
+                </div>
+            </div>
+        </div>
         </>
     );
 }
