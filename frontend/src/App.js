@@ -5,6 +5,7 @@ import Home from './pages/Home.js'
 import Register from './pages/Register.js'
 import Blog from './pages/Blog.js'
 import Create from './pages/Create.js'
+import Edit from './pages/Edit.js'
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import Box from '@mui/material/Box';
@@ -38,7 +39,8 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/blog/:blogId" element={<Blog />} />
                 <Route path="/create" element={<Create />} />
-                <Route path="*" element={<Navigate to="/login" replace />} />
+                <Route path="/blog/update/:blogId" element={<Edit />} />
+                <Route path="*" element={<Navigate to={(localStorage.getItem('token')) ?"/blog":"/login"} replace />} />
               </Routes>
             </BrowserRouter>
             <ToastContainer />

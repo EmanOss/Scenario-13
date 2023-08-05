@@ -21,6 +21,29 @@ public class UserController : ControllerBase
         _DBContext = dbContext;
         _jwtSettings = options.Value;
     }
+    /*gets the currently logged in user*/
+    private User? GetCurrentUser()
+    {
+        var currentUser = HttpContext.User;
+        if (currentUser.Identity != null && currentUser.Identity.IsAuthenticated)
+        {
+            return _DBContext.Users.FirstOrDefault(u => u.UserName == currentUser.Identity.Name);
+        }
+        return null;
+    }
+    [HttpGet("currUser")]
+    public IActionResult Getser()
+    {
+        var user = GetCurrentUser();
+        if (user != null)
+        {
+            return Ok(new {userName = user.UserName});
+            
+        }
+        return Ok(false);
+    }
+
+
     [HttpPost("register")]
     public async Task<ActionResult<User>> RegisterAsync(UserDto userDto)
     {
@@ -28,7 +51,7 @@ public class UserController : ControllerBase
         var userOld = await _DBContext.Users.FirstOrDefaultAsync(item => item.UserName == userDto.UserName);
         if (userOld != null)
         {
-            return Conflict(new {message = "Username already exists"});
+            return Conflict(new { message = "Username already exists" });
         }
         //create new user
         string passwordHash
@@ -49,7 +72,7 @@ public class UserController : ControllerBase
         Console.WriteLine("username at auth: " + userDto.UserName);
         var user = await _DBContext.Users.FirstOrDefaultAsync(item => item.UserName == userDto.UserName);
         if (user == null || !BCrypt.Net.BCrypt.Verify(userDto.Password, user.PasswordHash))
-            return Unauthorized(new {message = "Invalid Username or Password"});
+            return Unauthorized(new { message = "Invalid Username or Password" });
 
         //generate token
         var tokenhandler = new JwtSecurityTokenHandler();

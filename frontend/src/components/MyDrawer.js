@@ -37,6 +37,7 @@ function MyDrawer() {
             case 'Log out':
                 console.log('logged out!!!!!');
                 localStorage.removeItem('token');
+                localStorage.removeItem('username');
                 
                 usenavigate('/login');
                 break;

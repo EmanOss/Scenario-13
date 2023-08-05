@@ -22,41 +22,55 @@ function Blog() {
     const [newComment, setNewComment] = useState('');
     const [refresh, setRefresh] = useState(false);
     const [date, setDate] = useState("");
+    const [currentUserName, setCurrentUserName] = useState("");
+
+    const usenavigate = useNavigate();
 
 
+    const editBlog = (blogId) => {
+        usenavigate(`/blog/update/${blogId}`);
+      };
     useEffect(() => {
-        //getting blog
         const fetchData = async () => {
-
-            fetch(`${BASE_URL}/Blog/GetById/${blogId}`, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                },
-            }).then(async (response) => {
-                if (!response.ok) {
-                    throw new Error(response.message ||'Request failed!');
-                }
-                else {
-                    const jsonData = await response.json();
-                    setBlog(jsonData);
-                    setDate(jsonData.creationDate.split('T')[0]);
-                    console.log(jsonData.creationDate);
-
-                    return response.json();
-                }
-
-            })
-                .catch((err) => {
-                    console.log('Failed: ' + err.message);
-                })
-                .finally(() => {
-                    setIsLoading(false);
+            setIsLoading(true);
+    
+            try {
+                const blogResponse = await fetch(`${BASE_URL}/Blog/GetById/${blogId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    },
                 });
-
-
+    
+                if (!blogResponse.ok) {
+                    throw new Error(blogResponse.message || 'Request failed!');
+                }
+    
+                const blogData = await blogResponse.json();
+                setBlog(blogData);
+                setDate(blogData.creationDate.split('T')[0]);
+                // console.log(blogData.authorUserName+" blog");
+                // console.log(localStorage.getItem('username') +" local");
+    
+                const userResponse = await fetch(`${BASE_URL}/User/currUser`);
+    
+                if (!userResponse.ok) {
+                    throw new Error(userResponse.message || 'Request failed!');
+                }
+                const userData = await userResponse.json();
+                console.log(userData+" userrr");
+                setCurrentUserName(userData);
+    
+            } catch (error) {
+                console.error('Failed: ' + error.message);
+            } finally {
+                setIsLoading(false);
+            }
         };
+    
         fetchData();
     }, [refresh]);
+    
+    
 
     if (isLoading) {
         return <div>Loading...</div>;
@@ -111,6 +125,14 @@ function Blog() {
                                                     {blog.text}
                                                 </Typography>
                                             </CardContent>
+                                            
+                                            {(localStorage.getItem('username')==blog.authorUserName) ?
+                                                <CardActions sx={{ justifyContent: 'flex-end' }}>
+                                                    <Button size="small" display="flex" justifyContent="flex-end" onClick={()=>editBlog(blog.id)}>Edit Blog</Button>
+                                                </CardActions>
+                                                :
+                                                <></>
+                                            }
                                         </Card>
                                     </Grid>
                                     {blog.comments.map((comment) => (

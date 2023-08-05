@@ -49,6 +49,7 @@ const Login = () => {
                     } else {
                         const authToken = resp.token;
                         localStorage.setItem('token', authToken);
+                        localStorage.setItem('username', username);
                         console.log(authToken);
                         usenavigate('/blog')
                     }
